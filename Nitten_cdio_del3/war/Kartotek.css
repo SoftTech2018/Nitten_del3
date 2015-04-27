@@ -1,0 +1,78 @@
+/** Add css rules here for your application. */
+
+/* overall page layout */
+
+html {
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	horizontal-alignment: center;
+	background-color: rgb(160, 160, 160);
+}
+
+header {
+	background-color: black;
+	height: 60px;
+	color: white;
+	text-align: center;
+	padding: 5px;
+}
+
+nav {
+	line-height: 20px;
+	background-color: #eeeeee;
+	min-height: 400px; 
+	width: 100px;
+	float: left;
+	padding: 5px;
+}
+
+section {
+	width: 350px;
+	float: left;
+	padding: 10px;
+}
+
+footer {
+	background-color: black;
+	color: white;
+	clear: both;
+	text-align: center;
+	padding: 5px;
+}
+
+/* flextable styles */
+.FlexTable {
+	border-top: thin solid #444444;
+	border-left: thin solid #444444;
+	border-right: thin solid #111111;
+	border-bottom: thin solid #111111;
+	table-layout: fixed;
+	width: 400px; 
+}
+
+.FlexTable-Header {
+	font-weight: bold;
+}
+
+/** Example rules used by the template application (remove for your app) */
+/* used for all GWT text boxes */
+.gwt-TextBox {
+	font-size: 10pt;
+}
+
+/* dependant style for text boxes */
+.gwt-TextBox-invalidEntry {
+	border-color: red;
+}
+
+/* used for all GWT labels */
+.gwt-Label {
+	font-size: 10pt;
+}
+
+/* used for all GWT Buttons */
+.gwt-Button {
+	font-size: 10pt;
+}
+

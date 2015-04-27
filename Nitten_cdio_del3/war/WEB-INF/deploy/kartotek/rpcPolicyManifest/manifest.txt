@@ -1,0 +1,3 @@
+# Module kartotek
+# RPC service class, partial path of RPC policy file
+dtu.client.service.KartotekService, 100952EB518C09DA657FC443EA8C07EA.gwt.rpc
