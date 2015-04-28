@@ -46,7 +46,7 @@ public class DeleteView extends Composite {
 		// set headers in flextable
 		t.setText(0, 0, "Id");
 		t.setText(0, 1, "Navn");
-		t.setText(0, 2, "alder");
+		t.setText(0, 2, "CPR");
 
 		// V 1. fetch persons from data layer
 		// List<PersonDTO> personer = iPersonDAO.getPersons();
@@ -75,9 +75,9 @@ public class DeleteView extends Composite {
 			public void onSuccess(List<PersonDTO> result) {
 				// populate table and add delete anchor to each row
 				for (int i=0; i < result.size(); i++) {
-					t.setText(i+1, 0, "" + result.get(i).getId());
+					t.setText(i+1, 0, "" + result.get(i).getOprId());
 					t.setText(i+1, 1, result.get(i).getNavn());
-					t.setText(i+1, 2, "" + result.get(i).getAlder());
+					t.setText(i+1, 2, "" + result.get(i).getCpr());
 					Anchor delete = new Anchor("delete");
 					t.setWidget(i+1, 3, delete);	
 					
@@ -94,7 +94,7 @@ public class DeleteView extends Composite {
 	private class DeleteHandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
 
-			// if previous cancel open - force cancel operation¨
+			// if previous cancel open - force cancel operationï¿½
 			if (previousCancel != null)
 				previousCancel.fireEvent(new ClickEvent(){});
 

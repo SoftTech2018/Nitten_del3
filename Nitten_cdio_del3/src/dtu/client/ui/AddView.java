@@ -64,7 +64,7 @@ public class AddView extends Composite {
 		agePanel.add(alderLbl);
 		agePanel.add(ageTxt);
 
-		// use unicode escape sequence \u00F8 for 'ø'
+		// use unicode escape sequence \u00F8 for 'ï¿½'
 		save = new Button("Tilf\u00F8j");
 		save.setEnabled(false);
 
@@ -79,7 +79,7 @@ public class AddView extends Composite {
 				
 				// V.2
 				// create new PersonDTO
-				PersonDTO newPerson = new PersonDTO(nameTxt.getText(), Integer.parseInt(ageTxt.getText()));
+				PersonDTO newPerson = new PersonDTO(99, nameTxt.getText(), nameTxt.getText().substring(0, 3), ageTxt.getText(), "02324it!", true, true, true);
 
 				// save on server
 				clientImpl.service.savePerson(newPerson, new AsyncCallback<Void>() {

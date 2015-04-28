@@ -17,11 +17,11 @@ public class PersonDAO extends RemoteServiceServlet implements KartotekService  
 
 	public PersonDAO() throws Exception {
 		pList = new ArrayList<PersonDTO>();
-
+		
 		// Indset start data
-		savePerson(new PersonDTO("Hans Jensen",23));
-		savePerson(new PersonDTO("Ulla Jacobsen",25));
-		savePerson(new PersonDTO("Peter Hansen",25));
+		savePerson(new PersonDTO(id++, "Hans Jensen", "HJ", "012345-6789", "02324it!", true, true, true));
+		savePerson(new PersonDTO(id++, "Ulla Jacobsen","UJ", "012345-6789", "02324it!", false, true, true));
+		savePerson(new PersonDTO(id++, "Peter Hansen", "PH", "012345-6789", "02324it!", false, true, false));
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class PersonDAO extends RemoteServiceServlet implements KartotekService  
 		// throw new RuntimeException(" \"savePerson\" fejlede");
 
 		// add primary key
-		p.setId(id++);
+//		p.setId(id++);
 		pList.add(p);
 	}
 
@@ -38,7 +38,7 @@ public class PersonDAO extends RemoteServiceServlet implements KartotekService  
 	public void updatePerson(PersonDTO p) throws Exception {
 		// find object with id and update it
 		for (int i=0; i<pList.size();i++)
-			if (pList.get(i).getId() == p.getId())	
+			if (pList.get(i).getOprId() == p.getOprId())	
 				pList.set(i, p);
 
 	}
@@ -59,7 +59,7 @@ public class PersonDAO extends RemoteServiceServlet implements KartotekService  
 
 		// find object with id and remove it
 		for (int i=0; i<pList.size();i++)
-			if (pList.get(i).getId() == id)	
+			if (pList.get(i).getOprId() == id)	
 				pList.remove(i);
 	}
 }

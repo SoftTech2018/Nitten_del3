@@ -69,7 +69,7 @@ public class EditView extends Composite {
 		// set headers in flextable
 		t.setText(0, 0, "Id");
 		t.setText(0, 1, "Navn");
-		t.setText(0, 2, "alder");
+		t.setText(0, 2, "CPR");
 
 		// V.1 fetch persons from data layer
 		// personer = iPersonDAO.getPersons();
@@ -97,9 +97,9 @@ public class EditView extends Composite {
 			public void onSuccess(List<PersonDTO> result) {
 				// populate table and add delete anchor to each row
 				for (int rowIndex=0; rowIndex < result.size(); rowIndex++) {
-					t.setText(rowIndex+1, 0, "" + result.get(rowIndex).getId());
+					t.setText(rowIndex+1, 0, "" + result.get(rowIndex).getOprId());
 					t.setText(rowIndex+1, 1, result.get(rowIndex).getNavn());
-					t.setText(rowIndex+1, 2, "" + result.get(rowIndex).getAlder());
+					t.setText(rowIndex+1, 2, "" + result.get(rowIndex).getCpr());
 					Anchor edit = new Anchor("edit");
 					t.setWidget(rowIndex+1, 3, edit);
 
@@ -123,7 +123,7 @@ public class EditView extends Composite {
 	private class EditHandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
 
-			// if previous edit open - force cancel operation¨
+			// if previous edit open - force cancel operationï¿½
 			if (previousCancel != null)
 				previousCancel.fireEvent(new ClickEvent(){});
 
@@ -164,9 +164,7 @@ public class EditView extends Composite {
 					// and use it for location the object to be edited
 
 					// fill DTO with id and new values 
-					PersonDTO personDTO = new PersonDTO(
-							Integer.parseInt(t.getText(eventRowIndex, 0)), nameTxt.getText(), Integer.parseInt(ageTxt.getText())
-						);
+					PersonDTO personDTO = new PersonDTO(Integer.parseInt(t.getText(eventRowIndex, 0)), nameTxt.getText(), ageTxt.getText().substring(0, 3), "012345-6789", "02324it!", true, true, true);
 
 					// V.1 update object in backend
 					// iPersonDAO.updatePerson(personDTO, eventRowIndex-1);

@@ -71,7 +71,7 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 
 		try {
 			savePersonStmt.setString(1, p.getNavn());
-			savePersonStmt.setInt(2, p.getAlder());
+			savePersonStmt.setInt(2, Integer.valueOf(p.getCpr()));
 
 			savePersonStmt.executeUpdate();
 		} catch (SQLException e) {
@@ -83,8 +83,8 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 	public void updatePerson(PersonDTO p) throws Exception {
 		try {
 			updatePersonStmt.setString(1, p.getNavn());
-			updatePersonStmt.setInt(2, p.getAlder());
-			updatePersonStmt.setInt(3, p.getId());
+			updatePersonStmt.setInt(2, Integer.valueOf(p.getCpr()));
+			updatePersonStmt.setInt(3, p.getOprId());
 
 			updatePersonStmt.executeUpdate();
 		} catch (SQLException e) {
@@ -102,13 +102,13 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 			resultSet = getPersonsStmt.executeQuery(); 
 			results = new ArrayList< PersonDTO >();
 
-			while ( resultSet.next() )
-			{
-				results.add( new PersonDTO(
-						resultSet.getInt( "id" ),
-						resultSet.getString( "navn" ),
-						resultSet.getInt( "alder" )));
-			} 
+//			while ( resultSet.next() )
+//			{
+//				results.add( new PersonDTO(
+//						resultSet.getInt( "id" ),
+//						resultSet.getString( "navn" ),
+//						resultSet.getInt( "alder" )));
+//			} 
 		} 
 		catch ( SQLException sqlException )
 		{
