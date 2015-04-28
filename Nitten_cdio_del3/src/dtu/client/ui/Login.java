@@ -81,8 +81,12 @@ public class Login extends Composite {
 						if (per.getNavn().equalsIgnoreCase(username)){
 							userFound = true;
 							if (per.getPassword().equals(password)){
-								RootPanel.get("section").clear();
-								new MainView(clientImpl).run();
+								if (per.isAdmin()){
+									RootPanel.get("section").clear();
+									new MainView(clientImpl).run();
+								} else {
+									loginStatus.setText("Du er ikke admin.");
+								}
 							} else {
 								loginStatus.setText("Forkert password!");
 							}
@@ -95,5 +99,4 @@ public class Login extends Composite {
 			});
 		} 			
 	}
-
 }
