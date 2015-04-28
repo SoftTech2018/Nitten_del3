@@ -34,11 +34,19 @@ public class FieldVerifier {
 	 * @return true if valid, false if invalid
 	 */
 	public static boolean isValidName(String name) {
+		
+		for (int i=0; i < name.length(); i++){
+			String sString = name.substring(i, i+1);
+			if (sString.matches("[0-9]")){
+				return false;
+			}
+		}
+		
 		if (name == null) {
 			return false;
+		} else if (name.length() == 0) {
+			return false;			
 		}
-		if (name.length() == 0)
-			return false;
 		// max 30 karakterer
 		return name.length() <= 30;
 	}
