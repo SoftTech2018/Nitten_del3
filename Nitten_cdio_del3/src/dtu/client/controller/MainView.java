@@ -22,7 +22,7 @@ public class MainView  {
 	private KartotekServiceClientImpl clientImpl;
 	
 	
-	public MainView() {
+	public MainView(KartotekServiceClientImpl clientImpl) {
 		
 		// V.1
 		// add implementation of data layer
@@ -30,7 +30,7 @@ public class MainView  {
 		
 		// V.2
 		// add server side implementation of data layer
-		clientImpl = new KartotekServiceClientImpl(GWT.getModuleBaseURL() + "kartotekservice");
+		this.clientImpl = clientImpl;
 		
 		// wrap menuView
 		MenuView m = new MenuView(this);

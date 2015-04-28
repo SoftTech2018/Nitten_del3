@@ -1,7 +1,10 @@
 package dtu.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import dtu.client.controller.MainView;
+import com.google.gwt.core.client.GWT;
+
+import dtu.client.service.KartotekServiceClientImpl;
+import dtu.client.ui.Login;
 
 
 /**
@@ -11,7 +14,13 @@ public class Kartotek implements EntryPoint {
 	
 	public void onModuleLoad() {
 		
-		new MainView().run();
+		KartotekServiceClientImpl clientImpl = new KartotekServiceClientImpl(GWT.getModuleBaseURL() + "kartotekservice");
+		try {
+			new Login(clientImpl);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }

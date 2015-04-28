@@ -7,7 +7,15 @@ public class PersonDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
-	private String navn;
+	private String navn, password;
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	private int alder;
 	
 	// default constructor - must be defined
