@@ -2,7 +2,7 @@ package dtu.shared;
 
 import java.io.Serializable;
 
-public class PersonDTO implements Serializable {
+public class OperatoerDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,11 +19,11 @@ public class PersonDTO implements Serializable {
 
 	private boolean admin, operatoer, farmaceut;
 	
-	public PersonDTO(){
+	public OperatoerDTO(){
 		
 	}
 
-	public PersonDTO(int oprId, String oprNavn, String ini, String cpr, String password, boolean admin, boolean operatoer, boolean farmaceut)
+	public OperatoerDTO(int oprId, String oprNavn, String ini, String cpr, String password, boolean admin, boolean operatoer, boolean farmaceut)
 	{
 		this.oprId = oprId;
 		this.navn = oprNavn;
@@ -35,7 +35,7 @@ public class PersonDTO implements Serializable {
 		this.farmaceut = farmaceut;
 	}
 
-	public PersonDTO(PersonDTO opr)
+	public OperatoerDTO(OperatoerDTO opr)
 	{
 		this.oprId = opr.getOprId();
 		this.navn = opr.getOprNavn();

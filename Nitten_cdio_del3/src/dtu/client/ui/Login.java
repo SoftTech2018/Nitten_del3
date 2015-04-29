@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import dtu.client.controller.MainView;
 import dtu.client.service.KartotekServiceClientImpl;
-import dtu.shared.PersonDTO;
+import dtu.shared.OperatoerDTO;
 
 public class Login extends Composite {
 
@@ -68,7 +68,7 @@ public class Login extends Composite {
 			username = user.getText();
 			password = pass.getText();
 			userFound = false;
-			clientImpl.service.getPersons(new AsyncCallback<List<PersonDTO>>(){
+			clientImpl.service.getPersons(new AsyncCallback<List<OperatoerDTO>>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -76,8 +76,8 @@ public class Login extends Composite {
 				}
 
 				@Override
-				public void onSuccess(List<PersonDTO> result) {
-					for (PersonDTO per : result){
+				public void onSuccess(List<OperatoerDTO> result) {
+					for (OperatoerDTO per : result){
 						if (per.getNavn().equalsIgnoreCase(username)){
 							userFound = true;
 							if (per.getPassword().equals(password)){

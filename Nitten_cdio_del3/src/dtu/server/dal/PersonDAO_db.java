@@ -12,7 +12,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import dtu.client.service.KartotekService;
 import dtu.shared.DALException;
-import dtu.shared.PersonDTO;
+import dtu.shared.OperatoerDTO;
 
 public class PersonDAO_db extends RemoteServiceServlet implements KartotekService  {
 
@@ -65,7 +65,7 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 	}
 
 	@Override
-	public void savePerson(PersonDTO p) throws Exception {
+	public void savePerson(OperatoerDTO p) throws Exception {
 		// simulate server error
 		// throw new RuntimeException(" \"savePerson\" fejlede");
 
@@ -80,7 +80,7 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 	}
 
 	@Override
-	public void updatePerson(PersonDTO p) throws Exception {
+	public void updatePerson(OperatoerDTO p) throws Exception {
 		try {
 			updatePersonStmt.setString(1, p.getNavn());
 			updatePersonStmt.setInt(2, Integer.valueOf(p.getCpr()));
@@ -93,14 +93,14 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 	}
 
 	@Override
-	public List<PersonDTO> getPersons() throws Exception {
-		List< PersonDTO > results = null;
+	public List<OperatoerDTO> getPersons() throws Exception {
+		List< OperatoerDTO > results = null;
 		ResultSet resultSet = null;
 
 		try 
 		{
 			resultSet = getPersonsStmt.executeQuery(); 
-			results = new ArrayList< PersonDTO >();
+			results = new ArrayList< OperatoerDTO >();
 
 //			while ( resultSet.next() )
 //			{

@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import dtu.client.service.KartotekServiceClientImpl;
-import dtu.shared.PersonDTO;
+import dtu.shared.OperatoerDTO;
 
 public class BrowseView extends Composite {
 	VerticalPanel browsePanel;
@@ -40,7 +40,7 @@ public class BrowseView extends Composite {
 		//List<PersonDTO> personer = iPersonDAO.getPersons();
 
 		// V.2
-		clientImpl.service.getPersons(new AsyncCallback<List<PersonDTO>>() {
+		clientImpl.service.getPersons(new AsyncCallback<List<OperatoerDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -48,7 +48,7 @@ public class BrowseView extends Composite {
 			}
 
 			@Override
-			public void onSuccess(List<PersonDTO> result) {
+			public void onSuccess(List<OperatoerDTO> result) {
 				for (int i=0; i < result.size(); i++) {
 					t.setText(i+1, 0, "" + result.get(i).getOprId());
 					t.setText(i+1, 1, result.get(i).getNavn());

@@ -5,7 +5,7 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import dtu.shared.PersonDTO;
+import dtu.shared.OperatoerDTO;
 
 
 @RemoteServiceRelativePath("kartotekservice")
@@ -16,9 +16,9 @@ public interface KartotekService extends RemoteService {
 	// otherwise only generic server exceptions will be send back
 	// in the onFailure call back method
 	
-	public void savePerson(PersonDTO p) throws Exception;
-	public void updatePerson(PersonDTO p) throws Exception;
-	public List<PersonDTO> getPersons() throws Exception;
+	public void savePerson(OperatoerDTO p) throws Exception;
+	public void updatePerson(OperatoerDTO p) throws Exception;
+	public List<OperatoerDTO> getPersons() throws Exception;
 	public void deletePerson(int id) throws Exception; 
 	public int getSize() throws Exception;
 }

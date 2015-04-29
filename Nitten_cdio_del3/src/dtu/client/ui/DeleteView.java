@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import dtu.client.service.KartotekServiceClientImpl;
-import dtu.shared.PersonDTO;
+import dtu.shared.OperatoerDTO;
 
 public class DeleteView extends Composite {
 	VerticalPanel deletePanel;
@@ -64,7 +64,7 @@ public class DeleteView extends Composite {
 		
 
 		// V.2
-		clientImpl.service.getPersons(new AsyncCallback<List<PersonDTO>>() {
+		clientImpl.service.getPersons(new AsyncCallback<List<OperatoerDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -72,7 +72,7 @@ public class DeleteView extends Composite {
 			}
 
 			@Override
-			public void onSuccess(List<PersonDTO> result) {
+			public void onSuccess(List<OperatoerDTO> result) {
 				// populate table and add delete anchor to each row
 				for (int i=0; i < result.size(); i++) {
 					t.setText(i+1, 0, "" + result.get(i).getOprId());

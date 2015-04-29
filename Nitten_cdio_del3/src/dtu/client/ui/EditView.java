@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import dtu.client.service.KartotekServiceClientImpl;
 import dtu.shared.FieldVerifier;
-import dtu.shared.PersonDTO;
+import dtu.shared.OperatoerDTO;
 
 
 public class EditView extends Composite {
@@ -42,7 +42,7 @@ public class EditView extends Composite {
 
 
 	// person list
-	List<PersonDTO> personer;
+	List<OperatoerDTO> personer;
 
 	// previous cancel anchor
 	Anchor previousCancel = null;
@@ -86,7 +86,7 @@ public class EditView extends Composite {
 
 
 		// V.2
-		clientImpl.service.getPersons(new AsyncCallback<List<PersonDTO>>() {
+		clientImpl.service.getPersons(new AsyncCallback<List<OperatoerDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -94,7 +94,7 @@ public class EditView extends Composite {
 			}
 
 			@Override
-			public void onSuccess(List<PersonDTO> result) {
+			public void onSuccess(List<OperatoerDTO> result) {
 				// populate table and add delete anchor to each row
 				for (int rowIndex=0; rowIndex < result.size(); rowIndex++) {
 					t.setText(rowIndex+1, 0, "" + result.get(rowIndex).getOprId());
@@ -164,7 +164,7 @@ public class EditView extends Composite {
 					// and use it for location the object to be edited
 
 					// fill DTO with id and new values 
-					PersonDTO personDTO = new PersonDTO(Integer.parseInt(t.getText(eventRowIndex, 0)), nameTxt.getText(), ageTxt.getText().substring(0, 3), "012345-6789", "02324it!", true, true, true);
+					OperatoerDTO personDTO = new OperatoerDTO(Integer.parseInt(t.getText(eventRowIndex, 0)), nameTxt.getText(), ageTxt.getText().substring(0, 3), "012345-6789", "02324it!", true, true, true);
 
 					// V.1 update object in backend
 					// iPersonDAO.updatePerson(personDTO, eventRowIndex-1);

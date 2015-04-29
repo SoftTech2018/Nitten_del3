@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import dtu.client.service.KartotekServiceClientImpl;
 import dtu.shared.FieldVerifier;
-import dtu.shared.PersonDTO;
+import dtu.shared.OperatoerDTO;
 
 public class AddView extends Composite {
 	VerticalPanel addPanel;
@@ -79,7 +79,7 @@ public class AddView extends Composite {
 				
 				// V.2
 				// create new PersonDTO
-				PersonDTO newPerson = new PersonDTO(99, nameTxt.getText(), nameTxt.getText().substring(0, 3), ageTxt.getText(), "02324it!", true, true, true);
+				OperatoerDTO newPerson = new OperatoerDTO(99, nameTxt.getText(), nameTxt.getText().substring(0, 3), ageTxt.getText(), "02324it!", true, true, true);
 
 				// save on server
 				clientImpl.service.savePerson(newPerson, new AsyncCallback<Void>() {
