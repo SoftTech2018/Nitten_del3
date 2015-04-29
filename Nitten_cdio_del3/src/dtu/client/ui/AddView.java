@@ -90,7 +90,7 @@ public class AddView extends Composite {
 				
 				// V.2
 				// create new PersonDTO
-				OperatoerDTO newPerson = new OperatoerDTO(99, nameTxt.getText(), nameTxt.getText().substring(0, 3), ageTxt.getText(), "02324it!", true, true, true);
+				OperatoerDTO newPerson = new OperatoerDTO(99, nameTxt.getText(), nameTxt.getText().substring(0, 3), cprTxt.getText(), "02324it!", true, true, true);
 
 				// save on server
 				clientImpl.service.savePerson(newPerson, new AsyncCallback<Void>() {
@@ -158,6 +158,7 @@ public class AddView extends Composite {
 					cprTxt.removeStyleName("gwt-TextBox-invalidEntry");
 					cprValid = true;
 				}
+				checkFormValid();
 			}
 			
 		});
