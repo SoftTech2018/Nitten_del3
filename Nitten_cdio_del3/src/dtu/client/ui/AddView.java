@@ -37,6 +37,7 @@ public class AddView extends Composite {
 	// valid fields
 	boolean ageValid = false;
 	boolean nameValid = false;
+	boolean cprValid = false;
 
 	public AddView(final KartotekServiceClientImpl clientImpl) {
 
@@ -145,6 +146,21 @@ public class AddView extends Composite {
 			}
 
 		});
+		
+		
+		cprTxt.addKeyUpHandler(new KeyUpHandler(){
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if(!FieldVerifier.isValidCPR(cprTxt.getText())){
+					cprTxt.setStyleName("gwt-TextBox-invalidEntry");
+				} else {
+					cprTxt.removeStyleName("gwt-TextBox-invalidEntry");
+					cprValid = true;
+				}
+			}
+			
+		});
 
 		addPanel.add(namePanel);
 		addPanel.add(agePanel);
@@ -155,7 +171,7 @@ public class AddView extends Composite {
 	}
 
 	private void checkFormValid() {
-		if (ageValid && nameValid)
+		if (ageValid && nameValid && cprValid)
 			save.setEnabled(true);
 		else
 			save.setEnabled(false);

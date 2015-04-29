@@ -41,7 +41,6 @@ public class FieldVerifier {
 				return false;
 			}
 		}
-		
 		if (name == null) {
 			return false;
 		} else if (name.length() == 0) {
@@ -53,9 +52,27 @@ public class FieldVerifier {
 	
 	public static boolean isValidAge(String age) {
 		if (age.matches("[0-9]+"))
-			// max 100 år
+			// max 100 ï¿½r
 			return Integer.parseInt(age) < 100 ? true : false;
 		else
 			return false;	
+	}
+	
+	public static boolean isValidCPR(String cpr) {
+		for (int i=0; i < cpr.length(); i++){
+			String sString = cpr.substring(i, i+1);
+			if (sString.matches("[a-z]")){
+				return false;
+			}
+		}
+		if (cpr==null){
+			return false;
+		} else if (cpr.length() < 11 || cpr.length() > 11){
+			return false;
+		}
+		if (!(cpr.charAt(6)=='-')){
+			return false;
+		}
+		return true;
 	}
 }
