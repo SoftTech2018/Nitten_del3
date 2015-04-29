@@ -28,8 +28,10 @@ public class AddView extends Composite {
 	// controls
 	Label nameLbl;
 	Label ageLbl;
+	Label cprLbl;
 	TextBox nameTxt;
 	TextBox ageTxt;
+	TextBox cprTxt;
 	Button save = new Button("Tilf\u00F8j");
 
 	// valid fields
@@ -47,6 +49,7 @@ public class AddView extends Composite {
 
 		HorizontalPanel namePanel = new HorizontalPanel();
 		HorizontalPanel agePanel = new HorizontalPanel();
+		HorizontalPanel cprPanel = new HorizontalPanel();
 
 		nameLbl = new Label("Navn:");
 		nameLbl.setWidth("60px");
@@ -63,6 +66,13 @@ public class AddView extends Composite {
 		ageTxt.setHeight("1em");
 		agePanel.add(alderLbl);
 		agePanel.add(ageTxt);
+		
+		cprLbl = new Label("CPR-nummer:");
+		cprLbl.setWidth("60px");
+		cprTxt = new TextBox();
+		cprTxt.setHeight("1em");
+		cprPanel.add(cprLbl);
+		cprPanel.add(cprTxt);
 
 		// use unicode escape sequence \u00F8 for '�'
 		save = new Button("Tilf\u00F8j");
@@ -138,6 +148,7 @@ public class AddView extends Composite {
 
 		addPanel.add(namePanel);
 		addPanel.add(agePanel);
+		addPanel.add(cprPanel);
 		addPanel.add(save);
 
 
