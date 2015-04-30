@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -51,6 +52,9 @@ public class AddView extends Composite {
 		HorizontalPanel namePanel = new HorizontalPanel();
 		HorizontalPanel agePanel = new HorizontalPanel();
 		HorizontalPanel cprPanel = new HorizontalPanel();
+		HorizontalPanel adminPanel = new HorizontalPanel();
+		HorizontalPanel operatoerPanel = new HorizontalPanel();
+		HorizontalPanel farmaceutPanel = new HorizontalPanel();
 
 		nameLbl = new Label("Navn:");
 		nameLbl.setWidth("60px");
@@ -67,13 +71,37 @@ public class AddView extends Composite {
 		ageTxt.setHeight("1em");
 		agePanel.add(alderLbl);
 		agePanel.add(ageTxt);
-		
+
 		cprLbl = new Label("CPR-nummer:");
 		cprLbl.setWidth("60px");
 		cprTxt = new TextBox();
 		cprTxt.setHeight("1em");
 		cprPanel.add(cprLbl);
 		cprPanel.add(cprTxt);
+
+		//admin
+		Label adminLbl = new Label("Admin");
+		adminLbl.setWidth("60px");
+		CheckBox adminCB = new CheckBox();
+		adminCB.setHeight("1em");
+		adminPanel.add(adminLbl);
+		adminPanel.add(adminCB);
+
+		//operatoer
+		Label operatoerLbl = new Label("Operatør");
+		operatoerLbl.setWidth("60px");
+		CheckBox operatoerCB = new CheckBox();
+		operatoerCB.setHeight("1em");
+		operatoerPanel.add(operatoerLbl);
+		operatoerPanel.add(operatoerCB);
+
+		//farmaceut
+		Label farmLbl = new Label("Farmaceut");
+		farmLbl.setWidth("60px");
+		CheckBox farmCB = new CheckBox();
+		farmCB.setHeight("1em");
+		farmaceutPanel.add(farmLbl);
+		farmaceutPanel.add(farmCB);
 
 		// use unicode escape sequence \u00F8 for '�'
 		save = new Button("Tilf\u00F8j");
@@ -87,7 +115,7 @@ public class AddView extends Composite {
 				// v.1 
 				// iPersonDAO.savePerson(new PersonDTO(nameTxt.getText(), Integer.parseInt(ageTxt.getText())));
 				// Window.alert("Person gemt i kartotek");
-				
+
 				// V.2
 				// create new PersonDTO
 				OperatoerDTO newPerson = new OperatoerDTO(99, nameTxt.getText(), nameTxt.getText().substring(0, 3), cprTxt.getText(), "02324it!", true, true, true);
@@ -146,8 +174,8 @@ public class AddView extends Composite {
 			}
 
 		});
-		
-		
+
+
 		cprTxt.addKeyUpHandler(new KeyUpHandler(){
 
 			@Override
@@ -160,12 +188,15 @@ public class AddView extends Composite {
 				}
 				checkFormValid();
 			}
-			
+
 		});
 
 		addPanel.add(namePanel);
 		addPanel.add(agePanel);
 		addPanel.add(cprPanel);
+		addPanel.add(adminPanel);
+		addPanel.add(operatoerPanel);
+		addPanel.add(farmaceutPanel);
 		addPanel.add(save);
 
 
