@@ -1,0 +1,41 @@
+SELECT * FROM operatoer WHERE opr_id = #1
+INSERT INTO operatoer(opr_id, opr_navn, ini, cpr, password) VALUES ( #1, '#2', '#3', '#4', '#5')
+UPDATE operatoer SET opr_navn = '#1', ini = '#2', cpr = '#3', password = '#4' WHERE opr_id = #5
+SELECT * FROM operatoer
+SELECT * FROM produktbatch WHERE pb_id = #1
+SELECT * FROM produktbatch
+INSERT INTO produktbatch (pb_id, status, recept_id) VALUES ( #1, #2, #3)
+UPDATE produktbatch SET status = #1, recept_id = #2 WHERE pb_id = #3
+SELECT * FROM produktbatchkomponent WHERE pb_id = #1 and rb_id = #2
+SELECT * FROM produktbatchkomponent where pb_id = #1
+SELECT * FROM produktbatchkomponent
+INSERT INTO produktbatchkomponent (pb_id, rb_id, tara, netto, opr_id) VALUES (#1, #2, #3, #4, #5)
+UPDATE produktbatchkomponent SET tara = #1, netto = #2, opr_id#3 WHERE pb_id = #4 and rb_id = #5
+SELECT * FROM recept WHERE recept_id = #1
+SELECT * FROM recept
+INSERT INTO recept(recept_id, recept_navn) VALUES (#1, '#2')
+UPDATE recept SET recept_navn = '#1' WHERE recept_id = #2
+SELECT * FROM receptkomponent WHERE recept_id = #1 and raavare_id = #2
+SELECT * FROM receptkomponent where recept_id = #1
+SELECT * FROM receptkomponent
+INSERT INTO receptkomponent (recept_id, raavare_id, nom_netto, tolerance) VALUES (#1, #2, #3, #4)
+UPDATE receptkomponent SET nom_netto = #1, tolerance = #2 WHERE recept_id = #3 and raavare_id = #4
+SELECT * FROM raavarebatch WHERE rb_id = #1
+SELECT * FROM raavarebatch
+SELECT * FROM raavarebatch WHERE raavare_id = #1
+INSERT INTO raavarebatch (rb_id, raavare_id, maengde) VALUES (#1, #2, #3)
+UPDATE raavarebatch SET raavare_id =  #1, maengde = #2 WHERE rb_id = #3
+SELECT * FROM raavare WHERE raavare_id = #1
+SELECT * FROM raavare
+INSERT INTO raavare(raavare_id, raavare_navn, leverandoer) VALUES (#1, '#2', '#3')
+UPDATE raavare SET raavare_navn = '#1', leverandoer = '#2' WHERE raavare_id = #3
+CREATE TRIGGER oprTrig BEFORE INSERT ON operatoer FOR EACH ROW SET new.ini = 'trigger aktiveret!'
+select * from oprView
+CREATE PROCEDURE setView() begin CREATE VIEW oprView AS SELECT opr_id, opr_navn, ini FROM operatoer; END;
+call setView()
+CREATE FUNCTION oprID(oID INT) RETURNS VARCHAR(20) BEGIN DECLARE navn VARCHAR(20); SELECT opr_navn INTO navn FROM operatoer WHERE opr_id = oID; RETURN navn; END;
+drop view oprView
+drop trigger oprTrig
+drop procedure setView
+drop function oprID
+SELECT oprID(#1)

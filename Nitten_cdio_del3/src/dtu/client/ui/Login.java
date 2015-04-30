@@ -7,8 +7,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -23,7 +24,7 @@ public class Login extends Composite {
 	private Label password;
 	private Label loginStatus;
 	private TextBox user;
-	private TextBox pass;
+	private PasswordTextBox pass;
 	private Button btn1;
 	private KartotekServiceClientImpl clientImpl;
 
@@ -32,29 +33,30 @@ public class Login extends Composite {
 
 		VerticalPanel vPan = new VerticalPanel();
 		initWidget(vPan);
+		
+		final FlexTable t = new FlexTable();
+		t.getFlexCellFormatter().setWidth(0, 0, "150px");
+		t.getFlexCellFormatter().setWidth(0, 1, "200px");
 
 		userName = new Label("Bruger-ID:");
 		password = new Label("Password:");
 		user = new TextBox();
-		pass = new TextBox();
+		pass = new PasswordTextBox();
 		btn1 = new Button("Ok");
 		loginStatus = new Label("");
-
-		HorizontalPanel hoz1 = new HorizontalPanel();
-		HorizontalPanel hoz2 = new HorizontalPanel();
-		HorizontalPanel hoz3 = new HorizontalPanel();
+		user.setWidth("180px");
+		pass.setWidth("180px");
 
 		btn1.addClickHandler(new BtnClickHandler());
 
-		hoz1.add(userName);
-		hoz1.add(user);
-		hoz2.add(password);
-		hoz2.add(pass);
-		hoz3.add(btn1);
-		vPan.add(hoz1);
-		vPan.add(hoz2);
-		vPan.add(hoz3);
-		vPan.add(loginStatus);
+		t.setWidget(0, 0, userName);
+		t.setWidget(0, 1, user);
+		t.setWidget(1, 0, password);
+		t.setWidget(1, 1, pass);
+		t.setWidget(2, 0, btn1);
+		t.setWidget(2, 1, loginStatus);
+
+		vPan.add(t);
 		RootPanel.get("section").add(this);
 	}
 
