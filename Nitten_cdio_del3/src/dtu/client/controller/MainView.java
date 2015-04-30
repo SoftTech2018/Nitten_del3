@@ -12,7 +12,7 @@ public class MainView  {
 	
 	// reference to ContentView
 	private ContentView contentView;
-	
+	private MenuView m;
 	// V.1
 	// reference to data layer
 	// private IPersonDAO iPersonDAO;
@@ -22,7 +22,7 @@ public class MainView  {
 	private KartotekServiceClientImpl clientImpl;
 	
 	
-	public MainView(KartotekServiceClientImpl clientImpl) {
+	public MainView(KartotekServiceClientImpl clientImpl, String role) {
 		
 		// V.1
 		// add implementation of data layer
@@ -32,13 +32,22 @@ public class MainView  {
 		// add server side implementation of data layer
 		this.clientImpl = clientImpl;
 		
-		// wrap menuView
-		MenuView m = new MenuView(this);
-		RootPanel.get("nav").add(m);
+		switch (role){
+		case "ADMIN":
+			// wrap menuView
+			m = new MenuView(this);
+			
+			// wrap contentView
+			contentView = new ContentView(clientImpl);
+			break;
+		case "FARMACEUT":
+			break;
+		case "OPERATOER":
+			break;
+		}
 		
-		// wrap contentView
-		contentView = new ContentView(clientImpl);
-		RootPanel.get("section").add(contentView);	
+		RootPanel.get("nav").add(m);
+		RootPanel.get("section").add(contentView);
 	}
 	
 	public void run() {
@@ -62,6 +71,11 @@ public class MainView  {
 	
 	public void deletePersons() {
 		contentView.openDeleteView();
+	}
+	
+	public void logout() {
+		m.getVpanel().clear();
+		contentView.openLogoutView();
 	}
 	
 }

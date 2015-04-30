@@ -24,7 +24,7 @@ public class MenuView extends Composite {
 			}
 		});
 	
-		// use unicode escape sequence \u00F8 for 'ø'
+		// use unicode escape sequence \u00F8 for 'ï¿½'
 		Anchor add = new Anchor("Tilf\u00F8j person");
 		vPanel.add(add);
 		add.addClickHandler(new ClickHandler(){
@@ -48,5 +48,17 @@ public class MenuView extends Composite {
 			}
 		});
 		vPanel.add(delete);
+		
+		Anchor logout = new Anchor("Log ud");
+		logout.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event){				
+				main.logout();
+			}
+		});
+		vPanel.add(logout);
+	}
+	
+	public VerticalPanel getVpanel(){
+		return vPanel;
 	}
 }

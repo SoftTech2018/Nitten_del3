@@ -59,6 +59,12 @@ public class ContentView extends Composite {
 		EditView editView = new EditView(clientImpl);
 		contentPanel.add(editView);
 	}
+	
+	public void openLogoutView() {
+		contentPanel.clear();
+		Login login = new Login(clientImpl);
+		contentPanel.add(login);
+	}
 
 
 }

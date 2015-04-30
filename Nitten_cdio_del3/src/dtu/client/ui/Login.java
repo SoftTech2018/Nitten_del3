@@ -83,11 +83,17 @@ public class Login extends Composite {
 						if (per.getNavn().equalsIgnoreCase(username)){
 							userFound = true;
 							if (per.getPassword().equals(password)){
+								RootPanel.get("section").clear();
 								if (per.isAdmin()){
-									RootPanel.get("section").clear();
-									new MainView(clientImpl).run();
+									new MainView(clientImpl, "ADMIN").run();
+								} else if (per.isFarmaceut()){
+									loginStatus.setText("Du er en farmaceut.");
+									new MainView(clientImpl, "FARMACEUT").run();
+								} else if (per.isOperatoer()){
+									loginStatus.setText("Du er en operatør.");
+									new MainView(clientImpl, "OPERATOER").run();
 								} else {
-									loginStatus.setText("Du er ikke admin.");
+									loginStatus.setText("Du har ikke adgang til at logge ind.");
 								}
 							} else {
 								loginStatus.setText("Forkert password!");
