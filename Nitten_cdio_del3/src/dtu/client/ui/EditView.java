@@ -48,6 +48,7 @@ public class EditView extends Composite {
 
 	// previous cancel anchor
 	Anchor previousCancel = null;
+	List<OperatoerDTO> result;
 
 	public EditView(KartotekServiceClientImpl clientImpl) {
 		// V.1 this.iPersonDAO = iPersonDAO;
@@ -93,6 +94,7 @@ public class EditView extends Composite {
 
 			@Override
 			public void onSuccess(List<OperatoerDTO> result) {
+				EditView.this.result = result;
 				// populate table and add delete anchor to each row
 				for (int rowIndex=0; rowIndex < result.size(); rowIndex++) {
 					t.setText(rowIndex+1, 0, "" + result.get(rowIndex).getOprId());
@@ -209,23 +211,30 @@ public class EditView extends Composite {
 
 					// here you will normally fetch the primary key of the row 
 					// and use it for location the object to be edited
-
-					// fill DTO with id and new values 
-					OperatoerDTO personDTO = new OperatoerDTO(Integer.parseInt(t.getText(eventRowIndex, 0)), nameTxt.getText(), iniTxt.getText(), cprTxt.getText(), "02324it!", adminChk.getValue(), farmChk.getValue(), oprChk.getValue());
-
-					// V.2
-					clientImpl.service.updatePerson(personDTO, new AsyncCallback<Void>() {
-
-						@Override
-						public void onSuccess(Void result) {
-							Window.alert("Personen blev opdateret!");
+					for (OperatoerDTO pers : result){
+						if (pers.getOprId() == Integer.parseInt(t.getText(eventRowIndex, 0))){
+							pers.setNavn(nameTxt.getText());
+							pers.setIni(iniTxt.getText());
+							pers.setCpr(cprTxt.getText());
+							pers.setAdmin(adminChk.getValue());
+							pers.setFarmaceut(farmChk.getValue());
+							pers.setOperatoer(oprChk.getValue());
+							// V.2
+							clientImpl.service.updatePerson(pers, new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									Window.alert("Personen blev opdateret!");
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									Window.alert("Server fejl!" + caught.getMessage());
+								}
+							});
+							break;
 						}
-
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert("Server fejl!" + caught.getMessage());
-						}
-					});
+					}
 
 					// restore edit link
 					t.setWidget(eventRowIndex, 7, edit);

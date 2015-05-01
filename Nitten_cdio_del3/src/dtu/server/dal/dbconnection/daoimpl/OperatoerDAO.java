@@ -38,6 +38,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 	
 	public void updateOperatoer(OperatoerDTO opr) throws DALException {
 		Connector.doUpdate(txt.updateOperatoer(opr));
+		Connector.doUpdate(txt.updateOprRolle(opr));
 	}
 	
 	public List<OperatoerDTO> getOperatoerList() throws DALException {

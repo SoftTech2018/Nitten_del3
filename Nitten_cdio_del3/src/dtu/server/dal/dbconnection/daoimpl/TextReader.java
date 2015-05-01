@@ -252,4 +252,13 @@ public class TextReader {
 		return output;
 	}
 
+	public String updateOprRolle(OperatoerDTO opr) {
+		String output = "UPDATE roller set admin = #1, farmaceut = #2, operatoer = #3 WHERE opr_id = #4";
+		output = output.replaceFirst(illegalString + "1", Boolean.toString(opr.isAdmin()));
+		output = output.replaceFirst(illegalString + "2", Boolean.toString(opr.isFarmaceut()));
+		output = output.replaceFirst(illegalString + "3", Boolean.toString(opr.isOperatoer()));
+		output = output.replaceFirst(illegalString + "4", Integer.toString(opr.getOprId()));
+		return output;
+	}
+
 }
