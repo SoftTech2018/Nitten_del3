@@ -7,13 +7,15 @@ import java.util.List;
 import dtu.shared.OperatoerDTO;
 
 public interface IOperatoerDAO {
-	OperatoerDTO getOperatoer(int oprId) throws DALException;
-	List<OperatoerDTO> getOperatoerList() throws DALException;
+	public OperatoerDTO getOperatoer(int oprId) throws DALException;
+	public List<OperatoerDTO> getOperatoerList() throws DALException;
+	public List<OperatoerDTO> getListViewOpr() throws DALException;
 	void createOperatoer(OperatoerDTO opr) throws DALException;
 	void updateOperatoer(OperatoerDTO opr) throws DALException;
 	public ResultSet getView() throws DALException;
 	public void callProcedure() throws DALException;
 	public void setFunction() throws DALException;
 	public String getFunction(int id) throws DALException, SQLException;
-	public void dropAll() throws DALException;	
+	public void dropAll() throws DALException;
+	
 }

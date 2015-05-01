@@ -57,7 +57,7 @@ public class PersonDAO extends RemoteServiceServlet implements KartotekService  
 	
 	@Override
 	public List<OperatoerDTO> getOprView() throws Exception {
-		return oprDAO.getOperatoerList();
+		return oprDAO.getListViewOpr();
 	}
 
 	@Override
