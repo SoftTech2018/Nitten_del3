@@ -17,5 +17,7 @@ public interface KartotekServiceAsync {
 	void deletePerson(int index, AsyncCallback<Void> callback);
 
 	void getSize(AsyncCallback<Integer> callback);
+	
+	void getOprView(AsyncCallback<List<OperatoerDTO>> callback);
 
 }

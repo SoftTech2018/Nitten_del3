@@ -14,10 +14,11 @@ import dtu.shared.OperatoerDTO;
 public class OperatoerDAO implements IOperatoerDAO {
 	
 	TextReader txt;
+	private String view = "oprListView";
 	
 	public OperatoerDAO(TextReader txt) throws FileNotFoundException, DALException{
 		this.txt = txt;
-//		Connector.doUpdate(txt.getCommand(32));
+		Connector.doUpdate("CREATE OR REPLACE VIEW "+view+" AS SELECT opr_id, opr_navn, ini, cpr FROM operatoer");
 //		this.setProcedure();
 	}
 	
@@ -46,6 +47,20 @@ public class OperatoerDAO implements IOperatoerDAO {
 			while (rs.next()) 
 			{
 				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getBoolean("admin"), rs.getBoolean("operatoer"), rs.getBoolean("farmaceut")));
+			}
+		}
+		catch (SQLException e) { throw new DALException(e); }
+		return list;
+	}
+	
+	public List<OperatoerDTO> getListViewOpr() throws DALException {
+		List<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
+		ResultSet rs = Connector.doQuery("SELECT * FROM "+view);
+		try
+		{
+			while (rs.next()) 
+			{
+				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), null, false, false, false));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }

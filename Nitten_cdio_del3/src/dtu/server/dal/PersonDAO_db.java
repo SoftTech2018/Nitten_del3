@@ -25,6 +25,7 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 	private PreparedStatement savePersonStmt = null;
 	private PreparedStatement updatePersonStmt = null;
 	private PreparedStatement getPersonsStmt = null;
+	private PreparedStatement getOprViewStmt = null;
 	private PreparedStatement getSizeStmt = null;
 	private PreparedStatement deletePersonStmt = null;
 
@@ -46,8 +47,12 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 
 			// create query that get all persons in kartotek
 			getPersonsStmt = connection.prepareStatement( 
-					"SELECT * FROM person "); 
+					"SELECT * FROM person ");
 
+			// create query that get all persons in kartotek
+			getOprViewStmt = connection.prepareStatement( 
+					"SELECT * FROM oprView ");
+			
 			// create query that gets size of kartotek
 			getSizeStmt = connection.prepareStatement( 
 					"SELECT COUNT(*) FROM person ");
@@ -129,6 +134,34 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 		return results;
 	} 
 
+	@Override
+	public List<OperatoerDTO> getOprView() throws Exception {
+		List< OperatoerDTO > results = null;
+		ResultSet resultSet = null;
+
+		try 
+		{
+			resultSet = getOprViewStmt.executeQuery(); 
+			results = new ArrayList< OperatoerDTO >();
+		} 
+		catch ( SQLException sqlException )
+		{
+			throw new DALException(" \"getPersons\" fejlede");
+		} 
+		finally
+		{
+			try 
+			{
+				resultSet.close();
+			} 
+			catch ( SQLException sqlException )
+			{
+				sqlException.printStackTrace();         
+				close();
+			} 
+		} 
+		return results;
+	} 
 
 
 	@Override
@@ -163,5 +196,6 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 		catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		} 
-	} 
+	}
+
 }
