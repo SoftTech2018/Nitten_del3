@@ -33,6 +33,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 	
 	public void createOperatoer(OperatoerDTO opr) throws DALException {		
 			Connector.doUpdate(txt.createOperatoer(opr));
+			Connector.doUpdate(txt.createRoller(opr));
 	}
 	
 	public void updateOperatoer(OperatoerDTO opr) throws DALException {
