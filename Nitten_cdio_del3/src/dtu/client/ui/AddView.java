@@ -34,6 +34,9 @@ public class AddView extends Composite {
 	TextBox ageTxt;
 	TextBox cprTxt;
 	Button save = new Button("Tilf\u00F8j");
+	CheckBox adminCB;
+	CheckBox operatoerCB;
+	CheckBox farmCB;
 
 	// valid fields
 	boolean ageValid = false;
@@ -82,7 +85,7 @@ public class AddView extends Composite {
 		//admin
 		Label adminLbl = new Label("Admin");
 		adminLbl.setWidth("60px");
-		CheckBox adminCB = new CheckBox();
+		adminCB = new CheckBox();
 		adminCB.setHeight("1em");
 		adminPanel.add(adminLbl);
 		adminPanel.add(adminCB);
@@ -90,7 +93,7 @@ public class AddView extends Composite {
 		//operatoer
 		Label operatoerLbl = new Label("Operatør");
 		operatoerLbl.setWidth("60px");
-		CheckBox operatoerCB = new CheckBox();
+		operatoerCB = new CheckBox();
 		operatoerCB.setHeight("1em");
 		operatoerPanel.add(operatoerLbl);
 		operatoerPanel.add(operatoerCB);
@@ -98,7 +101,7 @@ public class AddView extends Composite {
 		//farmaceut
 		Label farmLbl = new Label("Farmaceut");
 		farmLbl.setWidth("60px");
-		CheckBox farmCB = new CheckBox();
+		farmCB = new CheckBox();
 		farmCB.setHeight("1em");
 		farmaceutPanel.add(farmLbl);
 		farmaceutPanel.add(farmCB);
@@ -118,8 +121,8 @@ public class AddView extends Composite {
 
 				// V.2
 				// create new PersonDTO
-				OperatoerDTO newPerson = new OperatoerDTO(99, nameTxt.getText(), nameTxt.getText().substring(0, 3), cprTxt.getText(), "02324it!", true, true, true);
-
+				OperatoerDTO newPerson = new OperatoerDTO(99, nameTxt.getText(), nameTxt.getText().substring(0, 3), cprTxt.getText(), "02324it!", adminCB.getValue(), operatoerCB.getValue(), farmCB.getValue());
+				
 				// save on server
 				clientImpl.service.savePerson(newPerson, new AsyncCallback<Void>() {
 
