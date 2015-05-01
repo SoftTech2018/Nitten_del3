@@ -77,5 +77,9 @@ public class MainView  {
 		m.getVpanel().clear();
 		contentView.openLogoutView();
 	}
+
+	public void showRecept() {
+		contentView.openReceptView();		
+	}
 	
 }

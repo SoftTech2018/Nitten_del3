@@ -66,5 +66,11 @@ public class ContentView extends Composite {
 		contentPanel.add(login);
 	}
 
+	public void openReceptView() {
+		contentPanel.clear();
+		BrowseRecept browseRecept = new BrowseRecept(clientImpl);
+		contentPanel.add(browseRecept);
+	}
+
 
 }

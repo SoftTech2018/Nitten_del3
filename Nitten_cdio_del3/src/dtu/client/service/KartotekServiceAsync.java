@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import dtu.shared.OperatoerDTO;
+import dtu.shared.ReceptViewDTO;
 
 public interface KartotekServiceAsync {
 
@@ -19,5 +20,7 @@ public interface KartotekServiceAsync {
 	void getSize(AsyncCallback<Integer> callback);
 	
 	void getOprView(AsyncCallback<List<OperatoerDTO>> callback);
+
+	void getReceptView(AsyncCallback<List<ReceptViewDTO>> asyncCallback);
 
 }

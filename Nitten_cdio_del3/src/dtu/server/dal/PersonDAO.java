@@ -8,16 +8,18 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import dtu.client.service.KartotekService;
 import dtu.server.dal.dbconnection.connector.Connector;
 import dtu.server.dal.dbconnection.daoimpl.OperatoerDAO;
+import dtu.server.dal.dbconnection.daoimpl.ReceptDAO;
 import dtu.server.dal.dbconnection.daoimpl.TextReader;
 import dtu.server.dal.dbconnection.daointerfaces.IOperatoerDAO;
 import dtu.shared.OperatoerDTO;
+import dtu.shared.ReceptViewDTO;
 
 public class PersonDAO extends RemoteServiceServlet implements KartotekService  {
 
 	private IOperatoerDAO oprDAO;
 //	private IProduktBatchDAO prodBatchDAO;
 //	private IProduktBatchKompDAO prodBatchKompDAO;
-//	private IReceptDAO receptDAO;
+	private ReceptDAO receptDAO;
 //	private IReceptKompDAO receptKompDAO;
 //	private IRaavareBatchDAO raavareBatchDAO;
 //	private IRaavareDAO raavareDAO;
@@ -33,7 +35,7 @@ public class PersonDAO extends RemoteServiceServlet implements KartotekService  
 		oprDAO = new OperatoerDAO(txt);
 //		prodBatchDAO = new ProduktBatchDAO(txt);
 //		prodBatchKompDAO = new ProduktBatchKompDAO(txt);
-//		receptDAO = new ReceptDAO(txt);
+		receptDAO = new ReceptDAO(txt);
 //		receptKompDAO = new ReceptKompDAO(txt);
 //		raavareBatchDAO = new RaavareBatchDAO(txt);
 //		raavareDAO = new RaavareDAO(txt);
@@ -80,5 +82,10 @@ public class PersonDAO extends RemoteServiceServlet implements KartotekService  
 	@Override
 	public void savePerson(OperatoerDTO p) throws Exception {
 		oprDAO.createOperatoer(p);		
+	}
+
+	@Override
+	public List<ReceptViewDTO> getReceptView() throws Exception {
+		return receptDAO.getReceptView();
 	}
 }

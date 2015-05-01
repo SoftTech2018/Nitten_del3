@@ -49,6 +49,15 @@ public class MenuView extends Composite {
 		});
 		vPanel.add(delete);
 		
+		Anchor showRecept = new Anchor("Vis recepter");
+		vPanel.add(showRecept);
+		// call back the controller
+		showRecept.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event){				
+				main.showRecept();
+			}
+		});
+		
 		Anchor logout = new Anchor("Log ud");
 		logout.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event){				

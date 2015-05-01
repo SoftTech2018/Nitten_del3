@@ -2,7 +2,8 @@ package dtu.server.dal.dbconnection.daointerfaces;
 
 import java.util.List;
 
-import dtu.server.dal.dbconnection.dto.ReceptDTO;
+import dtu.shared.ReceptDTO;
+
 
 public interface IReceptDAO {
 	ReceptDTO getRecept(int receptId) throws DALException;
