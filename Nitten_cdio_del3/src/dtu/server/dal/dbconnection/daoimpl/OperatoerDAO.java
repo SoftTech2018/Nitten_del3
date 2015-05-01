@@ -42,7 +42,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 	
 	public List<OperatoerDTO> getOperatoerList() throws DALException {
 		List<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
-		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer");
+		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer NATURAL JOIN roller");
 		try
 		{
 			while (rs.next()) 
