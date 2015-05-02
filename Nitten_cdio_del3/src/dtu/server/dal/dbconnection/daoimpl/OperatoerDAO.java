@@ -18,7 +18,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 	
 	public OperatoerDAO(TextReader txt) throws FileNotFoundException, DALException{
 		this.txt = txt;
-		Connector.doUpdate("CREATE OR REPLACE VIEW "+view+" AS SELECT opr_id, opr_navn, ini, cpr FROM operatoer NATURAL JOIN roller WHERE roller.admin+roller.operatoer+roller.farmaceut>0");
+		Connector.doUpdate("CREATE OR REPLACE VIEW "+view+" AS SELECT * FROM operatoer NATURAL JOIN roller WHERE roller.admin+roller.operatoer+roller.farmaceut>0");
 //		this.setProcedure();
 	}
 	
