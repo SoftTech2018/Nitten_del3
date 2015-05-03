@@ -85,6 +85,8 @@ public class BrowseView extends Composite {
 		t3.setText(0, 5, "opreratoer");
 		t3.setText(0, 6, "farmaceut");
 		
+		t3.addStyleName("FlexTable");
+		
 		final DeckPanel deckPanel = new DeckPanel();
 		
 		HorizontalPanel togglePanel = new HorizontalPanel();
@@ -145,18 +147,17 @@ public class BrowseView extends Composite {
 					t2.setText(i+1, 1, result.get(i).getNavn());
 					t2.setText(i+1, 2, result.get(i).getIni());
 					t2.setText(i+1, 3, "" + result.get(i).getCpr());
-					if(result.get(i).isAdmin()){ t2.setText(i+1, 4, ""+result.get(i).isAdmin()); 
-					} else { t2.setText(i+1, 4, ""); }
-					if(result.get(i).isOperatoer()){ t2.setText(i+1, 5, ""+result.get(i).isOperatoer()); 
-					} else { t2.setText(i+1, 5, ""); }
-					if(result.get(i).isFarmaceut()){ t2.setText(i+1, 6, ""+result.get(i).isFarmaceut()); 
-					} else { t2.setText(i+1, 6, ""); }
+					if(result.get(i).isAdmin()){ t2.setText(i+1, 4, "X"); 
+					} else { t2.setText(i+1, 4, "-"); }
+					if(result.get(i).isOperatoer()){ t2.setText(i+1, 5, "X"); 
+					} else { t2.setText(i+1, 5, "-"); }
+					if(result.get(i).isFarmaceut()){ t2.setText(i+1, 6, "X"); 
+					} else { t2.setText(i+1, 6, "-"); }
 				}
 			}
 
 		});
 		deckPanel.add(t2);
-		
 		
 		clientImpl.service.getPersons(new AsyncCallback<List<OperatoerDTO>>() {
 			
@@ -172,13 +173,20 @@ public class BrowseView extends Composite {
 					t3.setText(i+1, 1, result.get(i).getNavn());
 					t3.setText(i+1, 2, result.get(i).getIni());
 					t3.setText(i+1, 3, "" + result.get(i).getCpr());
-					if(result.get(i).isAdmin()){ t3.setText(i+1, 4, ""+result.get(i).isAdmin()); 
-					} else { t3.setText(i+1, 4, ""); }
-					if(result.get(i).isOperatoer()){ t3.setText(i+1, 5, ""+result.get(i).isOperatoer()); 
-					} else { t3.setText(i+1, 5, ""); }
-					if(result.get(i).isFarmaceut()){ t3.setText(i+1, 6, ""+result.get(i).isFarmaceut()); 
-					} else { t3.setText(i+1, 6, ""); }
+					if(result.get(i).isAdmin()){ t3.setText(i+1, 4, "X");
+					} else { t3.setText(i+1, 4, "-"); }
+					if(result.get(i).isOperatoer()){ t3.setText(i+1, 5, "X"); 
+					} else { t3.setText(i+1, 5, "-"); }
+					if(result.get(i).isFarmaceut()){ t3.setText(i+1, 6, "X"); 
+					} else { t3.setText(i+1, 6, "-"); }
 				}
+				
+				for (int i=0; i < result.size(); i++) {					
+					if(result.get(i).isAdmin() && result.get(i).isOperatoer() && result.get(i).isFarmaceut()){
+						t3.getRowFormatter().addStyleName(i+1, "FlexTable-Inactive");						
+					}
+				}
+				
 			}
 			
 		});

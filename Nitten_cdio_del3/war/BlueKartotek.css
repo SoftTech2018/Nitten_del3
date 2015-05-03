@@ -43,6 +43,8 @@ footer {
 	font-family: Courier;
 }
 
+
+
 /* flextable styles */
 .FlexTable {
 	border-top: thin solid #444444;
@@ -60,6 +62,14 @@ footer {
 .FlexTable-Header {
 	font-weight: bold;
 }
+
+.FlexTable-Inactive {
+  background-color: #cccccc;
+  color: #cccccc;
+  horizontal-alignment: center;
+  border-color: red;
+}
+
 
 /** Example rules used by the template application (remove for your app) */
 /* used for all GWT text boxes */
