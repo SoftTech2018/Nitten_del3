@@ -72,7 +72,7 @@ public class TextReader {
 	}
 	
 	public String createRoller(OperatoerDTO opr){
-		String output = "INSERT INTO roller(opr_id, admin, operatoer, farmaceut) VALUES ( '#1', '#2', '#3', '#4')";
+		String output = "INSERT INTO roller(opr_id, admin, operatoer, farmaceut) VALUES ( '#1', #2, #3, #4)";
 		output = output.replaceFirst(illegalString + "1", Integer.toString(opr.getOprId()));
 		output = output.replaceFirst(illegalString + "2", Boolean.toString(opr.isAdmin()));
 		output = output.replaceFirst(illegalString + "3", Boolean.toString(opr.isOperatoer()));
