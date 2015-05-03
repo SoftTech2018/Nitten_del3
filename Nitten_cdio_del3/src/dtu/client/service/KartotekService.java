@@ -24,4 +24,5 @@ public interface KartotekService extends RemoteService {
 	public int getSize() throws Exception;
 	public List<OperatoerDTO> getOprView() throws Exception;
 	public List<ReceptViewDTO> getReceptView() throws Exception;
+	public OperatoerDTO getOperatoer(int id) throws Exception;
 }

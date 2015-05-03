@@ -56,7 +56,7 @@ public class TextReader {
 	}
 	
 	public String getOperatoer(int oprID){
-		String output = "SELECT * FROM operatoer WHERE opr_id = #1";
+		String output = "SELECT * FROM operatoer NATURAL JOIN roller WHERE opr_id = #1";
 		output = output.replaceFirst(illegalString + "1", Integer.toString(oprID));
 		return output;
 	}

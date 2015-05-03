@@ -70,26 +70,25 @@ public class Login extends Composite {
 			username = user.getText();
 			password = pass.getText();
 			userFound = false;
-			clientImpl.service.getPersons(new AsyncCallback<List<OperatoerDTO>>(){
+			clientImpl.service.getOperatoer(Integer.parseInt(username), new AsyncCallback<OperatoerDTO>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
-					loginStatus.setText("FEJL! Kunne ikke kontakte serveren.");
+					loginStatus.setText("FEJL! " + caught.getMessage());
 				}
 
 				@Override
-				public void onSuccess(List<OperatoerDTO> result) {
-					for (OperatoerDTO per : result){
-						if (per.getNavn().equalsIgnoreCase(username)){
+				public void onSuccess(OperatoerDTO result) {
+						if (result.getOprId() == Integer.parseInt(username)){
 							userFound = true;
-							if (per.getPassword().equals(password)){
+							if (result.getPassword().equals(password)){
 								RootPanel.get("section").clear();
-								if (per.isAdmin()){
+								if (result.isAdmin()){
 									new MainView(clientImpl, "ADMIN").run();
-								} else if (per.isFarmaceut()){
+								} else if (result.isFarmaceut()){
 									loginStatus.setText("Du er en farmaceut.");
 									new MainView(clientImpl, "FARMACEUT").run();
-								} else if (per.isOperatoer()){
+								} else if (result.isOperatoer()){
 									loginStatus.setText("Du er en operatør.");
 									new MainView(clientImpl, "OPERATOER").run();
 								} else {
@@ -99,7 +98,6 @@ public class Login extends Composite {
 								loginStatus.setText("Forkert password!");
 							}
 						}
-					}
 					if (!userFound){
 						loginStatus.setText("Forkert bruger ID!");
 					}

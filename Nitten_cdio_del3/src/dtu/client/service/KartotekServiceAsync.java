@@ -22,5 +22,7 @@ public interface KartotekServiceAsync {
 	void getOprView(AsyncCallback<List<OperatoerDTO>> callback);
 
 	void getReceptView(AsyncCallback<List<ReceptViewDTO>> asyncCallback);
+	
+	void getOperatoer(int id, AsyncCallback<OperatoerDTO> callback);
 
 }

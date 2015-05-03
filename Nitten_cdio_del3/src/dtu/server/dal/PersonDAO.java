@@ -10,6 +10,7 @@ import dtu.server.dal.dbconnection.connector.Connector;
 import dtu.server.dal.dbconnection.daoimpl.OperatoerDAO;
 import dtu.server.dal.dbconnection.daoimpl.ReceptDAO;
 import dtu.server.dal.dbconnection.daoimpl.TextReader;
+import dtu.server.dal.dbconnection.daointerfaces.DALException;
 import dtu.server.dal.dbconnection.daointerfaces.IOperatoerDAO;
 import dtu.shared.OperatoerDTO;
 import dtu.shared.ReceptViewDTO;
@@ -88,5 +89,14 @@ public class PersonDAO extends RemoteServiceServlet implements KartotekService  
 	@Override
 	public List<ReceptViewDTO> getReceptView() throws Exception {
 		return receptDAO.getReceptView();
+	}
+	
+	@Override
+	public OperatoerDTO getOperatoer(int id) throws Exception{
+		try {
+			return oprDAO.getOperatoer(id);	
+		} catch (DALException e){
+			throw new Exception(e.getMessage());
+		}
 	}
 }
