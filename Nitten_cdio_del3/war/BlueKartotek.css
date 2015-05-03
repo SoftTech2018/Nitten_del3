@@ -65,7 +65,7 @@ footer {
 
 .FlexTable-Inactive {
   background-color: #cccccc;
-  color: #cccccc;
+  color: #000000;
   horizontal-alignment: center;
   border-color: red;
 }
