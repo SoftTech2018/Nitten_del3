@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -87,7 +88,28 @@ public class BrowseView extends Composite {
 
 		t3.addStyleName("FlexTable");
 
+		final FlexTable t4 = new FlexTable();
+		t4.getFlexCellFormatter().setWidth(0, 0, "50px");
+		t4.getFlexCellFormatter().setWidth(0, 1, "200px");
+		t4.getFlexCellFormatter().setWidth(0, 2, "50px");
+		t4.getFlexCellFormatter().setWidth(0, 3, "100px");
+
+		t4.addStyleName("FlexTable");
+		t4.getRowFormatter().addStyleName(0,"FlexTable-Header");
+
+		// set headers in flextable
+		t4.setText(0, 0, "Id");
+		t4.setText(0, 1, "Navn");
+		t4.setText(0, 2, "INI");
+		t4.setText(0, 3, "CPR");
+
+
 		final DeckPanel deckPanel = new DeckPanel();
+		
+		deckPanel.add(t1);
+		deckPanel.add(t2);
+		deckPanel.add(t3);
+		deckPanel.add(t4);
 
 		HorizontalPanel togglePanel = new HorizontalPanel();
 		togglePanel.setSpacing(10);
@@ -106,10 +128,11 @@ public class BrowseView extends Composite {
 		toggleButtonActive.setVisible(false);
 		togglePanel.add(toggleButtonActive);
 
-		// V.1
-		//List<PersonDTO> personer = iPersonDAO.getPersons();
+		final CheckBox checkBox = new CheckBox("Vis KUN inaktive");
+		checkBox.setVisible(false);
+		togglePanel.add(checkBox);
 
-		// V.2
+
 		clientImpl.service.getOprView(new AsyncCallback<List<OperatoerDTO>>() {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -123,17 +146,10 @@ public class BrowseView extends Composite {
 					t1.setText(i+1, 1, result.get(i).getNavn());
 					t1.setText(i+1, 2, result.get(i).getIni());
 					t1.setText(i+1, 3, "" + result.get(i).getCpr());
-					t1.setText(i+1, 4, "");
-					t1.setText(i+1, 5, "");
-					t1.setText(i+1, 6, "");
 				}
 			}
-
 		});
-		
-		deckPanel.add(t1);
-		deckPanel.add(t2);
-		deckPanel.add(t3);
+
 
 		toggleButtonDetail.addClickHandler(new ClickHandler() {			
 			@Override
@@ -146,7 +162,7 @@ public class BrowseView extends Composite {
 						}
 
 						@Override
-						public void onSuccess(List<OperatoerDTO> result) {
+						public void onSuccess(List<OperatoerDTO> result) {							
 							for (int i=0; i < result.size(); i++) {
 								t2.setText(i+1, 0, "" + result.get(i).getOprId());
 								t2.setText(i+1, 1, result.get(i).getNavn());
@@ -160,25 +176,40 @@ public class BrowseView extends Composite {
 								} else { t2.setText(i+1, 6, "-"); }
 							}
 						}
-
 					});
 					deckPanel.showWidget(1);
 					toggleButtonActive.setVisible(true);
 				} else {
+					clientImpl.service.getOprView(new AsyncCallback<List<OperatoerDTO>>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert("Server fejl! (deck 1)" + caught.getMessage());
+						}
+
+						@Override
+						public void onSuccess(List<OperatoerDTO> result) {
+							for (int i=0; i < result.size(); i++) {
+								t1.setText(i+1, 0, "" + result.get(i).getOprId());
+								t1.setText(i+1, 1, result.get(i).getNavn());
+								t1.setText(i+1, 2, result.get(i).getIni());
+								t1.setText(i+1, 3, "" + result.get(i).getCpr());
+							}
+						}
+					});
 					deckPanel.showWidget(0);
 					toggleButtonActive.setVisible(false);
 					toggleButtonActive.setDown(false);
+					checkBox.setVisible(false);
+					checkBox.setValue(false);
 				}
-
 			}
 		});
 
-		toggleButtonActive.addClickHandler(new ClickHandler() {			
+		toggleButtonActive.addClickHandler(new ClickHandler() {		
 			@Override
 			public void onClick(ClickEvent event) {
 				if(toggleButtonActive.isDown()){
 					clientImpl.service.getPersons(new AsyncCallback<List<OperatoerDTO>>() {
-
 						@Override
 						public void onFailure(Throwable caught) {
 							Window.alert("Server fejl! (deck 3)" + caught.getMessage());
@@ -197,14 +228,11 @@ public class BrowseView extends Composite {
 								} else { t3.setText(i+1, 5, "-"); }
 								if(result.get(i).isFarmaceut()){ t3.setText(i+1, 6, "X"); 
 								} else { t3.setText(i+1, 6, "-"); }
-								if(result.get(i).isAdmin() && result.get(i).isOperatoer() && result.get(i).isFarmaceut()){
-									t3.getRowFormatter().addStyleName(i+1, "FlexTable-Inactive");						
-								}
 							}				
 						}
-
 					});
 					deckPanel.showWidget(2);
+					checkBox.setVisible(true);
 				} else {
 					clientImpl.service.getOprView(new AsyncCallback<List<OperatoerDTO>>() {
 						@Override
@@ -227,14 +255,67 @@ public class BrowseView extends Composite {
 								} else { t2.setText(i+1, 6, "-"); }
 							}
 						}
-
 					});
 					deckPanel.showWidget(1);
+					checkBox.setVisible(false);
+					checkBox.setValue(false);
 				}
-
 			}
 		});
 
+		checkBox.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if(checkBox.getValue()){
+					clientImpl.service.getPersons(new AsyncCallback<List<OperatoerDTO>>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert("Server fejl! (deck 4)" + caught.getMessage());
+						}
+
+						@Override
+						public void onSuccess(List<OperatoerDTO> result) {
+							int temp = 0;
+							for (int i=0; i < result.size(); i++) {
+								if(!result.get(i).isAdmin() && !result.get(i).isOperatoer() && !result.get(i).isFarmaceut()){
+									temp++;
+									t4.setText(temp, 0, "" + result.get(i).getOprId());
+									t4.setText(temp, 1, result.get(i).getNavn());
+									t4.setText(temp, 2, result.get(i).getIni());
+									t4.setText(temp, 3, "" + result.get(i).getCpr());
+								}
+							}
+						}
+					});
+					deckPanel.showWidget(3);
+				} else {
+					clientImpl.service.getPersons(new AsyncCallback<List<OperatoerDTO>>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert("Server fejl! (deck 3)" + caught.getMessage());
+						}
+
+						@Override
+						public void onSuccess(List<OperatoerDTO> result) {
+							for (int i=0; i < result.size(); i++) {
+								t3.setText(i+1, 0, "" + result.get(i).getOprId());
+								t3.setText(i+1, 1, result.get(i).getNavn());
+								t3.setText(i+1, 2, result.get(i).getIni());
+								t3.setText(i+1, 3, "" + result.get(i).getCpr());
+								if(result.get(i).isAdmin()){ t3.setText(i+1, 4, "X");
+								} else { t3.setText(i+1, 4, "-"); }
+								if(result.get(i).isOperatoer()){ t3.setText(i+1, 5, "X"); 
+								} else { t3.setText(i+1, 5, "-"); }
+								if(result.get(i).isFarmaceut()){ t3.setText(i+1, 6, "X"); 
+								} else { t3.setText(i+1, 6, "-"); }
+							}				
+						}
+					});
+					deckPanel.showWidget(2);
+				}
+			}
+		});
 		browsePanel.add(togglePanel);
 		browsePanel.add(deckPanel);
 		deckPanel.showWidget(0);
