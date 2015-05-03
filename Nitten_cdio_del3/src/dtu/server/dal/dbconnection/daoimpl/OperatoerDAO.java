@@ -31,9 +31,26 @@ public class OperatoerDAO implements IOperatoerDAO {
 	    catch (SQLException e) {throw new DALException(e); }
 	}
 	
-	public void createOperatoer(OperatoerDTO opr) throws DALException {		
-			Connector.doUpdate(txt.createOperatoer(opr));
-			Connector.doUpdate(txt.createRoller(opr));
+	public void createOperatoer(OperatoerDTO opr, int nummer) throws DALException {		
+			Connector.doUpdate(txt.createOperatoer(opr, nummer));
+			Connector.doUpdate(txt.createRoller(opr, nummer));
+	}
+	
+	public int getOprNummer() throws DALException, SQLException {
+		ResultSet rs = Connector.doQuery("SELECT * FROM operatoernummer");
+		rs.next();
+		return rs.getInt(1);
+	}
+	
+	public void updateOprNummer() throws DALException, SQLException {
+		ResultSet rs = Connector.doQuery("SELECT * FROM operatoernummer");
+		rs.next();
+		int oldNumber = rs.getInt(1);
+		int newNumber = oldNumber+1;
+		Connector.doUpdate(txt.updateOprNummer(newNumber));
+//		String stringNumber = Integer.toString(oldNumber);
+//		String stringNumberNew = Integer.toString(newNumber);
+//		ResultSet rs2 = Connector.doUpdate("UPDATE operatoernummer set opr_nummer ="+ stringNumberNew +" ");
 	}
 	
 	public void updateOperatoer(OperatoerDTO opr) throws DALException {
@@ -97,7 +114,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 		Connector.doUpdate(txt.getCommand(38));
 		Connector.doUpdate(txt.getCommand(39));
 		Connector.doUpdate(txt.getCommand(40));
-	}	
+	}
 		
 }
 	

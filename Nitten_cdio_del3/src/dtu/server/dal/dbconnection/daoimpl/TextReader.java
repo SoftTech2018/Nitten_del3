@@ -61,9 +61,9 @@ public class TextReader {
 		return output;
 	}
 	
-	public String createOperatoer(OperatoerDTO opr){
+	public String createOperatoer(OperatoerDTO opr, int nummer){
 		String output = "INSERT INTO operatoer(opr_id, opr_navn, ini, cpr, password) VALUES ( '#1', '#2', '#3', '#4', '#5')";
-		output = output.replaceFirst(illegalString + "1", Integer.toString(opr.getOprId()));
+		output = output.replaceFirst(illegalString + "1", Integer.toString(nummer));
 		output = output.replaceFirst(illegalString + "2", opr.getOprNavn());
 		output = output.replaceFirst(illegalString + "3", opr.getIni());
 		output = output.replaceFirst(illegalString + "4", opr.getCpr());
@@ -71,12 +71,18 @@ public class TextReader {
 		return output;
 	}
 	
-	public String createRoller(OperatoerDTO opr){
+	public String createRoller(OperatoerDTO opr, int nummer){
 		String output = "INSERT INTO roller(opr_id, admin, operatoer, farmaceut) VALUES ( '#1', #2, #3, #4)";
-		output = output.replaceFirst(illegalString + "1", Integer.toString(opr.getOprId()));
+		output = output.replaceFirst(illegalString + "1", Integer.toString(nummer));
 		output = output.replaceFirst(illegalString + "2", Boolean.toString(opr.isAdmin()));
 		output = output.replaceFirst(illegalString + "3", Boolean.toString(opr.isOperatoer()));
 		output = output.replaceFirst(illegalString + "4", Boolean.toString(opr.isFarmaceut()));
+		return output;
+	}
+	
+	public String updateOprNummer(int nytNummer) {
+		String output = "UPDATE operatoernummer SET opr_nummer = '#1'";
+		output = output.replaceFirst(illegalString + "1", Integer.toString(nytNummer));
 		return output;
 	}
 	

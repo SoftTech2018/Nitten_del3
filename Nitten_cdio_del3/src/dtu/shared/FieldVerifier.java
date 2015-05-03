@@ -33,6 +33,7 @@ public class FieldVerifier {
 	 * @param name the name to validate
 	 * @return true if valid, false if invalid
 	 */
+	
 	public static boolean isValidName(String name) {
 		
 		for (int i=0; i < name.length(); i++){
@@ -41,9 +42,7 @@ public class FieldVerifier {
 				return false;
 			}
 		}
-		if (name == null) {
-			return false;
-		} else if (name.length() == 0) {
+		if (name.length() == 0) {
 			return false;			
 		}
 		// max 30 karakterer
@@ -59,15 +58,17 @@ public class FieldVerifier {
 	}
 	
 	public static boolean isValidCPR(String cpr) {
+		
 		for (int i=0; i < cpr.length(); i++){
 			String sString = cpr.substring(i, i+1);
 			if (sString.matches("[a-z]")){
 				return false;
+			} else if (sString.matches("[!]")){
+				
+				return false;
 			}
 		}
-		if (cpr==null){
-			return false;
-		} else if (cpr.length() < 11 || cpr.length() > 11){
+		if (cpr.length() < 11 || cpr.length() > 11){
 			return false;
 		}
 		if (!(cpr.charAt(6)=='-')){
