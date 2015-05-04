@@ -34,7 +34,7 @@ public class ReceptDAO implements IReceptDAO {
 	@Override
 	public List<ReceptDTO> getReceptList() throws DALException {
 		List<ReceptDTO> list = new ArrayList<ReceptDTO>();
-		ResultSet rs = Connector.doQuery("SELECT * FROM recept");
+		ResultSet rs = Connector.doQuery(txt.getCommand(15));
 		try {
 			while (rs.next()) {
 				list.add(new ReceptDTO(rs.getInt("recept_id"), rs.getString("recept_navn")));
@@ -58,12 +58,7 @@ public class ReceptDAO implements IReceptDAO {
 		List<ReceptViewDTO> output = new ArrayList<ReceptViewDTO>();
 		List<ReceptDTO> list = getReceptList();
 		for (ReceptDTO rw : list){
-			ResultSet rs = Connector.doQuery(
-					"SELECT raavare.raavare_navn, receptkomponent.nom_netto "
-					+ "FROM receptkomponent "
-					+ "INNER JOIN raavare "
-					+ "ON receptkomponent.raavare_id = raavare.raavare_id "
-					+ "AND receptkomponent.recept_id = " + Integer.toString(rw.getReceptId()));
+			ResultSet rs = Connector.doQuery(txt.getReceptView(Integer.toString(rw.getReceptId())));
 			List<IngrediensDTO> iList = new ArrayList<IngrediensDTO>();
 			try {
 				while (rs.next()){

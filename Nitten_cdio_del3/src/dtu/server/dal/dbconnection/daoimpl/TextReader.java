@@ -26,13 +26,13 @@ public class TextReader {
 	private String[] sqlCommands;
 	private String illegalString;
 	
-	public TextReader(){
-//		sqlFileCommands = new File("sqlCommands.txt");
-//		sqlCommands = readFile(sqlFileCommands);
+	public TextReader() throws FileNotFoundException{
+		sqlFileCommands = new File("WEB-INF/sqlCommands.txt");
+		sqlCommands = readFile(sqlFileCommands);
 		illegalString = "#";
 	}
 	
-	private String[] readFile(File fil){
+	private String[] readFile(File fil) throws FileNotFoundException{
 		List<String> data = new ArrayList<String>();
 		String linje = null;
 		data.add(null);
@@ -41,7 +41,7 @@ public class TextReader {
 				data.add(linje);
 			}
 		} catch (IOException e) {
-//			throw new FileNotFoundException();
+			throw new FileNotFoundException();
 		}
 		return data.toArray(new String[data.size()]);
 	}
@@ -56,23 +56,13 @@ public class TextReader {
 	}
 	
 	public String getOperatoer(int oprID){
-		String output = "SELECT * FROM operatoer NATURAL JOIN roller WHERE opr_id = #1";
+		String output = sqlCommands[1];
 		output = output.replaceFirst(illegalString + "1", Integer.toString(oprID));
 		return output;
 	}
 	
-//	public String createOperatoer(OperatoerDTO opr, int nummer){
-//		String output = "INSERT INTO operatoer(opr_id, opr_navn, ini, cpr, password) VALUES ( '#1', '#2', '#3', '#4', '#5')";
-//		output = output.replaceFirst(illegalString + "1", Integer.toString(nummer));
-//		output = output.replaceFirst(illegalString + "2", opr.getOprNavn());
-//		output = output.replaceFirst(illegalString + "3", opr.getIni());
-//		output = output.replaceFirst(illegalString + "4", opr.getCpr());
-//		output = output.replaceFirst(illegalString + "5", opr.getPassword());
-//		return output;
-//	}
-	
 	public String createOperatoer(OperatoerDTO opr){
-		String output = "CALL createOPR('#1', '#2', '#3', '#4', #5, #6, #7)";
+		String output = sqlCommands[2];
 		output = output.replaceFirst(illegalString + "1", opr.getNavn());
 		output = output.replaceFirst(illegalString + "2", opr.getIni());
 		output = output.replaceFirst(illegalString + "3", opr.getCpr());
@@ -83,23 +73,8 @@ public class TextReader {
 		return output;
 	}
 	
-	public String createRoller(OperatoerDTO opr, int nummer){
-		String output = "INSERT INTO roller(opr_id, admin, operatoer, farmaceut) VALUES ( '#1', #2, #3, #4)";
-		output = output.replaceFirst(illegalString + "1", Integer.toString(nummer));
-		output = output.replaceFirst(illegalString + "2", Boolean.toString(opr.isAdmin()));
-		output = output.replaceFirst(illegalString + "3", Boolean.toString(opr.isOperatoer()));
-		output = output.replaceFirst(illegalString + "4", Boolean.toString(opr.isFarmaceut()));
-		return output;
-	}
-	
-	public String updateOprNummer(int nytNummer) {
-		String output = "UPDATE operatoernummer SET opr_nummer = '#1'";
-		output = output.replaceFirst(illegalString + "1", Integer.toString(nytNummer));
-		return output;
-	}
-	
 	public String updateOperatoer(OperatoerDTO opr){
-		String output = "UPDATE operatoer SET opr_navn = '#1', ini = '#2', cpr = '#3', password = '#4' WHERE opr_id = #5";
+		String output = sqlCommands[3];
 		output = output.replaceFirst(illegalString + "1", opr.getOprNavn());
 		output = output.replaceFirst(illegalString + "2", opr.getIni());
 		output = output.replaceFirst(illegalString + "3", opr.getCpr());
@@ -271,11 +246,17 @@ public class TextReader {
 	}
 
 	public String updateOprRolle(OperatoerDTO opr) {
-		String output = "UPDATE roller set admin = #1, farmaceut = #2, operatoer = #3 WHERE opr_id = #4";
+		String output = sqlCommands[42];
 		output = output.replaceFirst(illegalString + "1", Boolean.toString(opr.isAdmin()));
 		output = output.replaceFirst(illegalString + "2", Boolean.toString(opr.isFarmaceut()));
 		output = output.replaceFirst(illegalString + "3", Boolean.toString(opr.isOperatoer()));
 		output = output.replaceFirst(illegalString + "4", Integer.toString(opr.getOprId()));
+		return output;
+	}
+
+	public String getReceptView(String recept) {
+		String output = sqlCommands[50];
+		output = output.replaceFirst(illegalString + "1", recept);
 		return output;
 	}
 
