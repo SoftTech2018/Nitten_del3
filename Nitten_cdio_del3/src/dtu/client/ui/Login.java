@@ -1,7 +1,5 @@
 package dtu.client.ui;
 
-import java.util.List;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -33,7 +31,7 @@ public class Login extends Composite {
 
 		VerticalPanel vPan = new VerticalPanel();
 		initWidget(vPan);
-		
+
 		final FlexTable t = new FlexTable();
 		t.getFlexCellFormatter().setWidth(0, 0, "150px");
 		t.getFlexCellFormatter().setWidth(0, 1, "200px");
@@ -63,43 +61,39 @@ public class Login extends Composite {
 	private class BtnClickHandler implements ClickHandler{
 
 		private String username, password;
-		private boolean userFound;
 
 		@Override
 		public void onClick(ClickEvent event) {
 			username = user.getText();
 			password = pass.getText();
-			userFound = false;
 			clientImpl.service.getOperatoer(Integer.parseInt(username), new AsyncCallback<OperatoerDTO>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
-					loginStatus.setText("FEJL! " + caught.getMessage());
+					loginStatus.setText("FEJL! " + caught.getMessage()); // Såfremt operatør-id ikke findes vises det her.
 				}
 
 				@Override
 				public void onSuccess(OperatoerDTO result) {
-						if (result.getOprId() == Integer.parseInt(username)){
-							userFound = true;
-							if (result.getPassword().equals(password)){
+					if (result.getOprId() == Integer.parseInt(username)){
+						if (result.getPassword().equals(password)){
+							if (result.isAdmin()){
 								RootPanel.get("section").clear();
-								if (result.isAdmin()){
-									new MainView(clientImpl, "ADMIN").run();
-								} else if (result.isFarmaceut()){
-									loginStatus.setText("Du er en farmaceut.");
-									new MainView(clientImpl, "FARMACEUT").run();
-								} else if (result.isOperatoer()){
-									loginStatus.setText("Du er en operatør.");
-									new MainView(clientImpl, "OPERATOER").run();
-								} else {
-									loginStatus.setText("Du har ikke adgang til at logge ind.");
-								}
+								new MainView(clientImpl, "ADMIN").run();
+							} else if (result.isFarmaceut()){
+								loginStatus.setText("Du er en farmaceut.");
+//								RootPanel.get("section").clear();
+//								new MainView(clientImpl, "FARMACEUT").run();
+							} else if (result.isOperatoer()){
+								loginStatus.setText("Du er en operatør.");
+//								RootPanel.get("section").clear();
+//								new MainView(clientImpl, "OPERATOER").run();
 							} else {
-								loginStatus.setText("Forkert password!");
+								loginStatus.setText("Du har ikke adgang til at logge ind.");
 							}
+						} else {
+							loginStatus.setText("Forkert password!");
 						}
-					if (!userFound){
-						loginStatus.setText("Forkert bruger ID!");
 					}
 				}
 			});
