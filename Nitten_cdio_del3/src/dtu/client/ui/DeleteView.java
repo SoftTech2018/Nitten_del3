@@ -64,7 +64,7 @@ public class DeleteView extends Composite {
 		
 
 		// V.2
-		clientImpl.service.getPersons(new AsyncCallback<List<OperatoerDTO>>() {
+		clientImpl.service.getOprView(new AsyncCallback<List<OperatoerDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -122,10 +122,10 @@ public class DeleteView extends Composite {
 					// V.2
 					// delete object with id in back end					
 					clientImpl.service.deletePerson(Integer.parseInt(t.getText(eventRowIndex, 0)), new AsyncCallback<Void>() {
-
+					String name = t.getText(eventRowIndex, 1);	
 						@Override
 						public void onSuccess(Void result) {
-
+							Window.alert(name + " deaktiveret");
 						}
 
 						@Override
