@@ -19,7 +19,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 	public OperatoerDAO(TextReader txt) throws FileNotFoundException, DALException{
 		this.txt = txt;
 		Connector.doUpdate("CREATE OR REPLACE VIEW "+view+" AS SELECT * FROM operatoer NATURAL JOIN roller WHERE roller.admin+roller.operatoer+roller.farmaceut>0");
-//		this.setProcedure();
+		this.setProcedure();
 	}
 	
 	public OperatoerDTO getOperatoer(int oprId) throws DALException {
@@ -92,7 +92,8 @@ public class OperatoerDAO implements IOperatoerDAO {
 	}
 	
 	public void setProcedure() throws DALException{
-		Connector.doUpdate("CREATE PROCEDURE setView() begin CREATE VIEW oprView AS SELECT opr_id, opr_navn, ini FROM operatoer; END;");
+		Connector.doUpdate("DROP PROCEDURE IF EXISTS createOPR;");
+		Connector.doUpdate("CREATE PROCEDURE createOPR(oprNAVN VARCHAR(20),init VARCHAR(2),cprNR VARCHAR(11),pass VARCHAR(10),admROLE INT,oprROLE INT,farmROLE INT) BEGIN DECLARE oprID INT;SELECT * INTO oprID FROM operatoernummer;INSERT INTO operatoer(opr_id,opr_navn,ini,cpr,password) VALUES(oprID,oprNAVN,init,cprNR,pass);INSERT INTO roller(opr_id,admin,operatoer,farmaceut) VALUES(oprID,admROLE,oprROLE,farmROLE);SET oprID:=oprID+1;UPDATE operatoernummer SET opr_nummer=oprID;END;");
 	}
 	
 	public void callProcedure() throws DALException{
