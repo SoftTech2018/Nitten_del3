@@ -1,12 +1,12 @@
 package dtu.client.ui;
 
 
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -39,6 +39,9 @@ public class AddView extends Composite {
 	// valid fields
 	boolean nameValid = false;
 	boolean cprValid = false;
+	boolean adminValue = false;
+	boolean operatoerValue = false;
+	boolean farmValue = false;
 
 	public AddView(final KartotekServiceClientImpl clientImpl) {
 
@@ -162,23 +165,45 @@ public class AddView extends Composite {
 			}
 
 		});
-
+		
+		adminCB.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				adminValue = AddView.this.adminCB.getValue();
+				checkFormValid();
+			}
+		});
+		
+		operatoerCB.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				operatoerValue = AddView.this.operatoerCB.getValue();
+				checkFormValid();
+			}
+		});
+		
+		farmCB.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				farmValue = AddView.this.farmCB.getValue();
+				checkFormValid();
+			}
+			
+		});
+		
 		addPanel.add(namePanel);
 		addPanel.add(cprPanel);
 		addPanel.add(adminPanel);
 		addPanel.add(operatoerPanel);
 		addPanel.add(farmaceutPanel);
 		addPanel.add(save);
-
-
 	}
 
 	private void checkFormValid() {
-		if (nameValid && cprValid)
+		if (nameValid && cprValid && (adminValue||operatoerValue||farmValue))
 			save.setEnabled(true);
 		else
 			save.setEnabled(false);
-
 	}
 
 }
