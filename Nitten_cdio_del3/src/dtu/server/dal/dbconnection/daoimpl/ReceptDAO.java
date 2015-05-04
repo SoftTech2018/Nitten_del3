@@ -59,13 +59,11 @@ public class ReceptDAO implements IReceptDAO {
 		List<ReceptDTO> list = getReceptList();
 		for (ReceptDTO rw : list){
 			ResultSet rs = Connector.doQuery(
-					"SELECT raavare.raavare_navn, receptkomponent.nom_netto " +
-							"FROM recept " +
-							"INNER JOIN receptkomponent " +
-							"INNER JOIN raavare " +
-							" WHERE recept.recept_id = receptkomponent.recept_id " +
-							"AND recept.recept_id = " + Integer.toString(rw.getReceptId()) +
-					" AND receptkomponent.raavare_id = raavare.raavare_id");
+					"SELECT raavare.raavare_navn, receptkomponent.nom_netto "
+					+ "FROM receptkomponent "
+					+ "INNER JOIN raavare "
+					+ "ON receptkomponent.raavare_id = raavare.raavare_id "
+					+ "AND receptkomponent.recept_id = " + Integer.toString(rw.getReceptId()));
 			List<IngrediensDTO> iList = new ArrayList<IngrediensDTO>();
 			try {
 				while (rs.next()){
