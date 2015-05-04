@@ -43,7 +43,7 @@ UPDATE roller set admin = #1, farmaceut = #2, operatoer = #3 WHERE opr_id = #4
 SELECT * FROM oprListView
 CREATE OR REPLACE VIEW oprListView AS SELECT * FROM operatoer NATURAL JOIN roller WHERE roller.admin+roller.operatoer+roller.farmaceut>0
 DROP PROCEDURE IF EXISTS createOPR;
-CREATE PROCEDURE createOPR(oprNAVN VARCHAR(20),init VARCHAR(20),cprNR VARCHAR(20),pass VARCHAR(20),admROLE BOOLEAN,oprROLE BOOLEAN,farmROLE BOOLEAN) BEGIN DECLARE oprID INT;SELECT * INTO oprID FROM operatoernummer;INSERT INTO operatoer(opr_id,opr_navn,ini,cpr,password) VALUES(oprID,oprNAVN,init,cprNR,pass);INSERT INTO roller(opr_id,admin,operatoer,farmaceut) VALUES(oprID,admROLE,oprROLE,farmROLE);SET oprID:=oprID+1;UPDATE operatoernummer SET opr_nummer=oprID;END;
+CREATE PROCEDURE createOPR(oprNAVN VARCHAR(20),init VARCHAR(20),cprNR VARCHAR(20),pass VARCHAR(20),admROLE BOOLEAN,oprROLE BOOLEAN,farmROLE BOOLEAN) BEGIN DECLARE oprID INT;INSERT INTO operatoer(opr_navn,ini,cpr,password) VALUES(oprNAVN,init,cprNR,pass);SET oprID = LAST_INSERT_ID();INSERT INTO roller(opr_id,admin,operatoer,farmaceut) VALUES(oprID,admROLE,oprROLE,farmROLE);END;
 call setView()
 CREATE FUNCTION oprID(oID INT) RETURNS VARCHAR(20) BEGIN DECLARE navn VARCHAR(20); SELECT opr_navn INTO navn FROM operatoer WHERE opr_id = oID; RETURN navn; END;
 select * from oprView

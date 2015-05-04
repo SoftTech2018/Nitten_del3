@@ -1,12 +1,12 @@
 package dtu.client.ui;
 
 
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -28,10 +28,8 @@ public class AddView extends Composite {
 
 	// controls
 	Label nameLbl;
-	Label ageLbl;
 	Label cprLbl;
 	TextBox nameTxt;
-	TextBox ageTxt;
 	TextBox cprTxt;
 	Button save = new Button("Tilf\u00F8j");
 	CheckBox adminCB;
@@ -39,9 +37,11 @@ public class AddView extends Composite {
 	CheckBox farmCB;
 
 	// valid fields
-	boolean ageValid = false;
 	boolean nameValid = false;
 	boolean cprValid = false;
+	boolean adminValue = false;
+	boolean operatoerValue = false;
+	boolean farmValue = false;
 
 	public AddView(final KartotekServiceClientImpl clientImpl) {
 
@@ -53,7 +53,6 @@ public class AddView extends Composite {
 
 
 		HorizontalPanel namePanel = new HorizontalPanel();
-		HorizontalPanel agePanel = new HorizontalPanel();
 		HorizontalPanel cprPanel = new HorizontalPanel();
 		HorizontalPanel adminPanel = new HorizontalPanel();
 		HorizontalPanel operatoerPanel = new HorizontalPanel();
@@ -65,15 +64,6 @@ public class AddView extends Composite {
 		nameTxt.setHeight("1em");
 		namePanel.add(nameLbl);
 		namePanel.add(nameTxt);
-
-
-		Label alderLbl = new Label("Alder:");
-		alderLbl.setWidth("60px");
-		ageTxt = new TextBox();
-		ageTxt.setWidth("5em");
-		ageTxt.setHeight("1em");
-		agePanel.add(alderLbl);
-		agePanel.add(ageTxt);
 
 		cprLbl = new Label("CPR-nummer:");
 		cprLbl.setWidth("60px");
@@ -161,24 +151,6 @@ public class AddView extends Composite {
 
 		});
 
-		ageTxt.addKeyUpHandler(new KeyUpHandler(){
-
-			@Override
-			public void onKeyUp(KeyUpEvent event) {
-				if (!FieldVerifier.isValidAge(ageTxt.getText())) {
-					ageTxt.setStyleName("gwt-TextBox-invalidEntry");
-					ageValid = false;
-				}
-				else {
-					ageTxt.removeStyleName("gwt-TextBox-invalidEntry");
-					ageValid = true;
-				}
-				checkFormValid();
-			}
-
-		});
-
-
 		cprTxt.addKeyUpHandler(new KeyUpHandler(){
 
 			@Override
@@ -193,24 +165,45 @@ public class AddView extends Composite {
 			}
 
 		});
-
+		
+		adminCB.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				adminValue = AddView.this.adminCB.getValue();
+				checkFormValid();
+			}
+		});
+		
+		operatoerCB.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				operatoerValue = AddView.this.operatoerCB.getValue();
+				checkFormValid();
+			}
+		});
+		
+		farmCB.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				farmValue = AddView.this.farmCB.getValue();
+				checkFormValid();
+			}
+			
+		});
+		
 		addPanel.add(namePanel);
-		addPanel.add(agePanel);
 		addPanel.add(cprPanel);
 		addPanel.add(adminPanel);
 		addPanel.add(operatoerPanel);
 		addPanel.add(farmaceutPanel);
 		addPanel.add(save);
-
-
 	}
 
 	private void checkFormValid() {
-		if (ageValid && nameValid && cprValid)
+		if (nameValid && cprValid && (adminValue||operatoerValue||farmValue))
 			save.setEnabled(true);
 		else
 			save.setEnabled(false);
-
 	}
 
 }
