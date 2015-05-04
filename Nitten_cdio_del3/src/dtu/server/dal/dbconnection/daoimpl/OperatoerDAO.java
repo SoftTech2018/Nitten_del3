@@ -31,26 +31,8 @@ public class OperatoerDAO implements IOperatoerDAO {
 	    catch (SQLException e) {throw new DALException(e); }
 	}
 	
-	public void createOperatoer(OperatoerDTO opr, int nummer) throws DALException {		
-			Connector.doUpdate(txt.createOperatoer(opr, nummer));
-			Connector.doUpdate(txt.createRoller(opr, nummer));
-	}
-	
-	public int getOprNummer() throws DALException, SQLException {
-		ResultSet rs = Connector.doQuery("SELECT * FROM operatoernummer");
-		rs.next();
-		return rs.getInt(1);
-	}
-	
-	public void updateOprNummer() throws DALException, SQLException {
-		ResultSet rs = Connector.doQuery("SELECT * FROM operatoernummer");
-		rs.next();
-		int oldNumber = rs.getInt(1);
-		int newNumber = oldNumber+1;
-		Connector.doUpdate(txt.updateOprNummer(newNumber));
-//		String stringNumber = Integer.toString(oldNumber);
-//		String stringNumberNew = Integer.toString(newNumber);
-//		ResultSet rs2 = Connector.doUpdate("UPDATE operatoernummer set opr_nummer ="+ stringNumberNew +" ");
+	public void createOperatoer(OperatoerDTO opr) throws DALException {		
+			Connector.doUpdate(txt.createOperatoer(opr));
 	}
 	
 	public void updateOperatoer(OperatoerDTO opr) throws DALException {
@@ -93,7 +75,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 	
 	public void setProcedure() throws DALException{
 		Connector.doUpdate("DROP PROCEDURE IF EXISTS createOPR;");
-		Connector.doUpdate("CREATE PROCEDURE createOPR(oprNAVN VARCHAR(20),init VARCHAR(2),cprNR VARCHAR(11),pass VARCHAR(10),admROLE INT,oprROLE INT,farmROLE INT) BEGIN DECLARE oprID INT;SELECT * INTO oprID FROM operatoernummer;INSERT INTO operatoer(opr_id,opr_navn,ini,cpr,password) VALUES(oprID,oprNAVN,init,cprNR,pass);INSERT INTO roller(opr_id,admin,operatoer,farmaceut) VALUES(oprID,admROLE,oprROLE,farmROLE);SET oprID:=oprID+1;UPDATE operatoernummer SET opr_nummer=oprID;END;");
+		Connector.doUpdate("CREATE PROCEDURE createOPR(oprNAVN VARCHAR(20),init VARCHAR(20),cprNR VARCHAR(20),pass VARCHAR(20),admROLE BOOLEAN,oprROLE BOOLEAN,farmROLE BOOLEAN) BEGIN DECLARE oprID INT;SELECT * INTO oprID FROM operatoernummer;INSERT INTO operatoer(opr_id,opr_navn,ini,cpr,password) VALUES(oprID,oprNAVN,init,cprNR,pass);INSERT INTO roller(opr_id,admin,operatoer,farmaceut) VALUES(oprID,admROLE,oprROLE,farmROLE);SET oprID:=oprID+1;UPDATE operatoernummer SET opr_nummer=oprID;END;");
 	}
 	
 	public void callProcedure() throws DALException{

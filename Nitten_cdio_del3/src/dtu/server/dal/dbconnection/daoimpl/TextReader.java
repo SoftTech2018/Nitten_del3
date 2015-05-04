@@ -61,13 +61,25 @@ public class TextReader {
 		return output;
 	}
 	
-	public String createOperatoer(OperatoerDTO opr, int nummer){
-		String output = "INSERT INTO operatoer(opr_id, opr_navn, ini, cpr, password) VALUES ( '#1', '#2', '#3', '#4', '#5')";
-		output = output.replaceFirst(illegalString + "1", Integer.toString(nummer));
-		output = output.replaceFirst(illegalString + "2", opr.getOprNavn());
-		output = output.replaceFirst(illegalString + "3", opr.getIni());
-		output = output.replaceFirst(illegalString + "4", opr.getCpr());
-		output = output.replaceFirst(illegalString + "5", opr.getPassword());
+//	public String createOperatoer(OperatoerDTO opr, int nummer){
+//		String output = "INSERT INTO operatoer(opr_id, opr_navn, ini, cpr, password) VALUES ( '#1', '#2', '#3', '#4', '#5')";
+//		output = output.replaceFirst(illegalString + "1", Integer.toString(nummer));
+//		output = output.replaceFirst(illegalString + "2", opr.getOprNavn());
+//		output = output.replaceFirst(illegalString + "3", opr.getIni());
+//		output = output.replaceFirst(illegalString + "4", opr.getCpr());
+//		output = output.replaceFirst(illegalString + "5", opr.getPassword());
+//		return output;
+//	}
+	
+	public String createOperatoer(OperatoerDTO opr){
+		String output = "CALL createOPR('#1', '#2', '#3', '#4', #5, #6, #7)";
+		output = output.replaceFirst(illegalString + "1", opr.getNavn());
+		output = output.replaceFirst(illegalString + "2", opr.getIni());
+		output = output.replaceFirst(illegalString + "3", opr.getCpr());
+		output = output.replaceFirst(illegalString + "4", opr.getPassword());
+		output = output.replaceFirst(illegalString + "5", Boolean.toString(opr.isAdmin()));
+		output = output.replaceFirst(illegalString + "6", Boolean.toString(opr.isOperatoer()));
+		output = output.replaceFirst(illegalString + "7", Boolean.toString(opr.isFarmaceut()));
 		return output;
 	}
 	

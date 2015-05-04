@@ -82,8 +82,7 @@ public class PersonDAO extends RemoteServiceServlet implements KartotekService  
 
 	@Override
 	public void savePerson(OperatoerDTO p) throws Exception {
-		oprDAO.createOperatoer(p, oprDAO.getOprNummer());
-		oprDAO.updateOprNummer();
+		oprDAO.createOperatoer(p);
 	}
 
 	@Override
