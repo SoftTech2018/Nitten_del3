@@ -32,8 +32,8 @@ public class EditView extends Composite {
 
 	// valid fields - initially a field is valid
 	boolean nameValid = true;
-	boolean ageValid = true;
-	boolean roleValid = true;
+	boolean cprValid = true;
+//	boolean roleValid = true;
 	boolean adminValue;
 	boolean farmValue;
 	boolean oprValue;
@@ -287,9 +287,8 @@ public class EditView extends Composite {
 					adminValue = EditView.this.adminChk.getValue();
 					
 					// enable/disable ok depending on form status 
-					if (nameValid&&ageValid&& (adminValue || farmValue || oprValue)){
+					if (nameValid&&cprValid&& (adminValue || farmValue || oprValue)){
 						t.setWidget(eventRowIndex, 7, ok);
-						roleValid = true;
 					}
 					else
 						t.setText(eventRowIndex, 7, "ok");			
@@ -302,9 +301,8 @@ public class EditView extends Composite {
 					farmValue = EditView.this.farmChk.getValue();
 					
 					// enable/disable ok depending on form status 
-					if (nameValid&&ageValid&& (adminValue || farmValue || oprValue)){
+					if (nameValid&&cprValid&& (adminValue || farmValue || oprValue)){
 						t.setWidget(eventRowIndex, 7, ok);
-						roleValid = true;
 					} 
 					else
 						t.setText(eventRowIndex, 7, "ok");				
@@ -317,9 +315,8 @@ public class EditView extends Composite {
 					oprValue = EditView.this.oprChk.getValue();
 					
 					// enable/disable ok depending on form status 
-					if (nameValid&&ageValid&& (adminValue || farmValue || oprValue)){
+					if (nameValid&&cprValid&& (adminValue || farmValue || oprValue)){
 						t.setWidget(eventRowIndex, 7, ok);
-						roleValid = true;
 					} 
 					else
 						t.setText(eventRowIndex, 7, "ok");		
@@ -339,7 +336,7 @@ public class EditView extends Composite {
 					}
 
 					// enable/disable ok depending on form status 
-					if (nameValid&&ageValid&&roleValid)
+					if (nameValid&&cprValid&&(adminValue || farmValue || oprValue))
 						t.setWidget(eventRowIndex, 7, ok);
 					else
 						t.setText(eventRowIndex, 7, "ok");				
@@ -351,15 +348,15 @@ public class EditView extends Composite {
 				public void onKeyUp(KeyUpEvent event) {
 					if (!FieldVerifier.isValidCPR(cprTxt.getText())) {
 						cprTxt.setStyleName("gwt-TextBox-invalidEntry");
-						ageValid = false;
+						cprValid = false;
 					}
 					else {
 						cprTxt.removeStyleName("gwt-TextBox-invalidEntry");
-						ageValid = true;
+						cprValid = true;
 					}
 
 					// enable/disable ok depending on form status 
-					if (nameValid&&ageValid)
+					if (nameValid&&cprValid && (adminValue || farmValue || oprValue))
 						t.setWidget(eventRowIndex, 7, ok);
 					else
 						t.setText(eventRowIndex, 7, "ok");
