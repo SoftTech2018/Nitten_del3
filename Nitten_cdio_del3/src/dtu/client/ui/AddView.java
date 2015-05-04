@@ -28,10 +28,8 @@ public class AddView extends Composite {
 
 	// controls
 	Label nameLbl;
-	Label ageLbl;
 	Label cprLbl;
 	TextBox nameTxt;
-	TextBox ageTxt;
 	TextBox cprTxt;
 	Button save = new Button("Tilf\u00F8j");
 	CheckBox adminCB;
@@ -39,7 +37,6 @@ public class AddView extends Composite {
 	CheckBox farmCB;
 
 	// valid fields
-	boolean ageValid = false;
 	boolean nameValid = false;
 	boolean cprValid = false;
 
@@ -53,7 +50,6 @@ public class AddView extends Composite {
 
 
 		HorizontalPanel namePanel = new HorizontalPanel();
-		HorizontalPanel agePanel = new HorizontalPanel();
 		HorizontalPanel cprPanel = new HorizontalPanel();
 		HorizontalPanel adminPanel = new HorizontalPanel();
 		HorizontalPanel operatoerPanel = new HorizontalPanel();
@@ -65,15 +61,6 @@ public class AddView extends Composite {
 		nameTxt.setHeight("1em");
 		namePanel.add(nameLbl);
 		namePanel.add(nameTxt);
-
-
-		Label alderLbl = new Label("Alder:");
-		alderLbl.setWidth("60px");
-		ageTxt = new TextBox();
-		ageTxt.setWidth("5em");
-		ageTxt.setHeight("1em");
-		agePanel.add(alderLbl);
-		agePanel.add(ageTxt);
 
 		cprLbl = new Label("CPR-nummer:");
 		cprLbl.setWidth("60px");
@@ -161,24 +148,6 @@ public class AddView extends Composite {
 
 		});
 
-		ageTxt.addKeyUpHandler(new KeyUpHandler(){
-
-			@Override
-			public void onKeyUp(KeyUpEvent event) {
-				if (!FieldVerifier.isValidAge(ageTxt.getText())) {
-					ageTxt.setStyleName("gwt-TextBox-invalidEntry");
-					ageValid = false;
-				}
-				else {
-					ageTxt.removeStyleName("gwt-TextBox-invalidEntry");
-					ageValid = true;
-				}
-				checkFormValid();
-			}
-
-		});
-
-
 		cprTxt.addKeyUpHandler(new KeyUpHandler(){
 
 			@Override
@@ -195,7 +164,6 @@ public class AddView extends Composite {
 		});
 
 		addPanel.add(namePanel);
-		addPanel.add(agePanel);
 		addPanel.add(cprPanel);
 		addPanel.add(adminPanel);
 		addPanel.add(operatoerPanel);
@@ -206,7 +174,7 @@ public class AddView extends Composite {
 	}
 
 	private void checkFormValid() {
-		if (ageValid && nameValid && cprValid)
+		if (nameValid && cprValid)
 			save.setEnabled(true);
 		else
 			save.setEnabled(false);
