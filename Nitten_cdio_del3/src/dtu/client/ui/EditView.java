@@ -33,14 +33,12 @@ public class EditView extends Composite {
 	// valid fields - initially a field is valid
 	boolean nameValid = true;
 	boolean cprValid = true;
-//	boolean roleValid = true;
 	boolean adminValue;
 	boolean farmValue;
 	boolean oprValue;
 	
 	int eventRowIndex;
 
-	// V.2
 	KartotekServiceClientImpl clientImpl;
 
 	// person list
@@ -51,8 +49,6 @@ public class EditView extends Composite {
 	List<OperatoerDTO> result;
 
 	public EditView(KartotekServiceClientImpl clientImpl) {
-		// V.1 this.iPersonDAO = iPersonDAO;
-		// v.2
 		this.clientImpl = clientImpl;
 
 		editPanel = new VerticalPanel();
@@ -81,10 +77,9 @@ public class EditView extends Composite {
 		t.setText(0, 2, "Initial");
 		t.setText(0, 3, "CPR");
 		t.setText(0, 4, "Admin");
-		t.setText(0, 5, "Farmaceut");
-		t.setText(0, 6, "Operatoer");
+		t.setText(0, 5, "Operatoer");
+		t.setText(0, 6, "Farmaceut");
 
-		// V.2
 		clientImpl.service.getPersons(new AsyncCallback<List<OperatoerDTO>>() {
 
 			@Override
@@ -105,14 +100,14 @@ public class EditView extends Composite {
 					admin.setEnabled(false);
 					admin.setValue(result.get(rowIndex).isAdmin());
 					t.setWidget(rowIndex+1, 4, admin);
-					CheckBox farm = new CheckBox();
-					farm.setEnabled(false);
-					farm.setValue(result.get(rowIndex).isFarmaceut());
-					t.setWidget(rowIndex+1, 5, farm);
 					CheckBox opr = new CheckBox();
 					opr.setEnabled(false);
 					opr.setValue(result.get(rowIndex).isOperatoer());
-					t.setWidget(rowIndex+1, 6, opr);
+					t.setWidget(rowIndex+1, 5, opr);
+					CheckBox farm = new CheckBox();
+					farm.setEnabled(false);
+					farm.setValue(result.get(rowIndex).isFarmaceut());
+					t.setWidget(rowIndex+1, 6, farm);
 					Anchor edit = new Anchor("edit");
 					t.setWidget(rowIndex+1, 7, edit);
 
@@ -141,8 +136,8 @@ public class EditView extends Composite {
 		t.setText(0, 2, "Initialer");
 		t.setText(0, 3, "CPR");
 		t.setText(0, 4, "Admin");
-		t.setText(0, 5, "Farmaceut");
-		t.setText(0, 6, "Operatoer");
+		t.setText(0, 5, "Operatoer");
+		t.setText(0, 6, "Farmaceut");
 	}
 
 	private class EditHandler implements ClickHandler {
@@ -159,8 +154,8 @@ public class EditView extends Composite {
 			iniTxt.setText(t.getText(eventRowIndex, 2));
 			cprTxt.setText(t.getText(eventRowIndex, 3));
 			adminChk.setValue(((CheckBox) t.getWidget(eventRowIndex, 4)).getValue());
-			farmChk.setValue(((CheckBox) t.getWidget(eventRowIndex, 5)).getValue());
-			oprChk.setValue(((CheckBox) t.getWidget(eventRowIndex, 6)).getValue());
+			oprChk.setValue(((CheckBox) t.getWidget(eventRowIndex, 5)).getValue());
+			farmChk.setValue(((CheckBox) t.getWidget(eventRowIndex, 6)).getValue());
 			
 			adminValue = adminChk.getValue();
 			farmValue = farmChk.getValue();
@@ -171,8 +166,8 @@ public class EditView extends Composite {
 			t.setWidget(eventRowIndex, 2, iniTxt);
 			t.setWidget(eventRowIndex, 3, cprTxt);
 			t.setWidget(eventRowIndex, 4, adminChk);
-			t.setWidget(eventRowIndex, 5, farmChk);
-			t.setWidget(eventRowIndex, 6, oprChk);
+			t.setWidget(eventRowIndex, 5, oprChk);
+			t.setWidget(eventRowIndex, 6, farmChk);
 
 			// start editing here
 			nameTxt.setFocus(true);
@@ -200,14 +195,14 @@ public class EditView extends Composite {
 					admin.setEnabled(false);
 					admin.setValue(adminChk.getValue());
 					t.setWidget(eventRowIndex, 4, admin);
-					CheckBox farm = new CheckBox();
-					farm.setEnabled(false);
-					farm.setValue(farmChk.getValue());
-					t.setWidget(eventRowIndex, 5, farm);
 					CheckBox opr = new CheckBox();
 					opr.setEnabled(false);
 					opr.setValue(oprChk.getValue());
-					t.setWidget(eventRowIndex, 6, opr);
+					t.setWidget(eventRowIndex, 5, opr);
+					CheckBox farm = new CheckBox();
+					farm.setEnabled(false);
+					farm.setValue(farmChk.getValue());
+					t.setWidget(eventRowIndex, 6, farm);
 
 					// here you will normally fetch the primary key of the row 
 					// and use it for location the object to be edited
@@ -264,14 +259,14 @@ public class EditView extends Composite {
 					admin.setEnabled(false);
 					admin.setValue(adminVal);
 					t.setWidget(eventRowIndex, 4, admin);
-					CheckBox farm = new CheckBox();
-					farm.setEnabled(false);
-					farm.setValue(farmVal);
-					t.setWidget(eventRowIndex, 5, farm);
 					CheckBox opr = new CheckBox();
 					opr.setEnabled(false);
 					opr.setValue(oprVal);
-					t.setWidget(eventRowIndex, 6, opr);
+					t.setWidget(eventRowIndex, 5, opr);
+					CheckBox farm = new CheckBox();
+					farm.setEnabled(false);
+					farm.setValue(farmVal);
+					t.setWidget(eventRowIndex, 6, farm);
 
 					// restore edit link
 					t.setWidget(eventRowIndex, 7, edit);
