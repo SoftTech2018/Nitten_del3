@@ -72,7 +72,7 @@ public class EditView extends Composite {
 		t.getRowFormatter().addStyleName(0,"FlexTable-Header");
 
 		// set headers in flextable
-		t.setText(0, 0, "ID");
+		t.setText(0, 0, "Id");
 		t.setText(0, 1, "Navn");
 		t.setText(0, 2, "Initial");
 		t.setText(0, 3, "CPR");

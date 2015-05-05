@@ -20,20 +20,16 @@ import dtu.shared.OperatoerDTO;
 public class BrowseView extends Composite {
 	VerticalPanel browsePanel;
 
-	// reference to data layer
-	// IPersonDAO iPersonDAO;
-
 	public BrowseView(final KartotekServiceClientImpl clientImpl) {
-		//	this.iPersonDAO = iPersonDAO;
 
 		browsePanel = new VerticalPanel();
 		initWidget(this.browsePanel);
 
 		final FlexTable t1 = new FlexTable();
-		t1.getFlexCellFormatter().setWidth(0, 0, "50px");
-		t1.getFlexCellFormatter().setWidth(0, 1, "200px");
+		t1.setWidth("200px");
+		t1.getFlexCellFormatter().setWidth(0, 0, "25px");
+		t1.getFlexCellFormatter().setWidth(0, 1, "125px");
 		t1.getFlexCellFormatter().setWidth(0, 2, "50px");
-		t1.getFlexCellFormatter().setWidth(0, 3, "100px");
 
 		t1.addStyleName("FlexTable");
 		t1.getRowFormatter().addStyleName(0,"FlexTable-Header");
@@ -41,17 +37,15 @@ public class BrowseView extends Composite {
 		// set headers in flextable
 		t1.setText(0, 0, "Id");
 		t1.setText(0, 1, "Navn");
-		t1.setText(0, 2, "INI");
-		t1.setText(0, 3, "CPR");
+		t1.setText(0, 2, "Initial");
 
 		final FlexTable t2 = new FlexTable();
-		t2.getFlexCellFormatter().setWidth(0, 0, "50px");
-		t2.getFlexCellFormatter().setWidth(0, 1, "200px");
+		t2.getFlexCellFormatter().setWidth(0, 0, "25px");
+		t2.getFlexCellFormatter().setWidth(0, 1, "125px");
 		t2.getFlexCellFormatter().setWidth(0, 2, "50px");
-		t2.getFlexCellFormatter().setWidth(0, 3, "100px");
-		t2.getFlexCellFormatter().setWidth(0, 4, "50px");
+		t2.getFlexCellFormatter().setWidth(0, 3, "50px");
+		t2.getFlexCellFormatter().setWidth(0, 4, "70px");
 		t2.getFlexCellFormatter().setWidth(0, 5, "70px");
-		t2.getFlexCellFormatter().setWidth(0, 6, "70px");
 
 		t2.addStyleName("FlexTable");
 		t2.getRowFormatter().addStyleName(0,"FlexTable-Header");
@@ -59,20 +53,18 @@ public class BrowseView extends Composite {
 		// set headers in flextable
 		t2.setText(0, 0, "Id");
 		t2.setText(0, 1, "Navn");
-		t2.setText(0, 2, "INI");
-		t2.setText(0, 3, "CPR");
-		t2.setText(0, 4, "admin");
-		t2.setText(0, 5, "opreratoer");
-		t2.setText(0, 6, "farmaceut");
+		t2.setText(0, 2, "Initial");
+		t2.setText(0, 3, "admin");
+		t2.setText(0, 4, "opreratoer");
+		t2.setText(0, 5, "farmaceut");
 
 		final FlexTable t3 = new FlexTable();
-		t3.getFlexCellFormatter().setWidth(0, 0, "50px");
-		t3.getFlexCellFormatter().setWidth(0, 1, "200px");
+		t3.getFlexCellFormatter().setWidth(0, 0, "25px");
+		t3.getFlexCellFormatter().setWidth(0, 1, "125px");
 		t3.getFlexCellFormatter().setWidth(0, 2, "50px");
-		t3.getFlexCellFormatter().setWidth(0, 3, "100px");
-		t3.getFlexCellFormatter().setWidth(0, 4, "50px");
+		t3.getFlexCellFormatter().setWidth(0, 3, "50px");
+		t3.getFlexCellFormatter().setWidth(0, 4, "70px");
 		t3.getFlexCellFormatter().setWidth(0, 5, "70px");
-		t3.getFlexCellFormatter().setWidth(0, 6, "70px");
 
 		t3.addStyleName("FlexTable");
 		t3.getRowFormatter().addStyleName(0,"FlexTable-Header");
@@ -80,19 +72,17 @@ public class BrowseView extends Composite {
 		// set headers in flextable
 		t3.setText(0, 0, "Id");
 		t3.setText(0, 1, "Navn");
-		t3.setText(0, 2, "INI");
-		t3.setText(0, 3, "CPR");
-		t3.setText(0, 4, "admin");
-		t3.setText(0, 5, "opreratoer");
-		t3.setText(0, 6, "farmaceut");
+		t3.setText(0, 2, "Initial");
+		t3.setText(0, 3, "admin");
+		t3.setText(0, 4, "opreratoer");
+		t3.setText(0, 5, "farmaceut");
 
 		t3.addStyleName("FlexTable");
 
 		final FlexTable t4 = new FlexTable();
-		t4.getFlexCellFormatter().setWidth(0, 0, "50px");
-		t4.getFlexCellFormatter().setWidth(0, 1, "200px");
+		t4.getFlexCellFormatter().setWidth(0, 0, "25px");
+		t4.getFlexCellFormatter().setWidth(0, 1, "125px");
 		t4.getFlexCellFormatter().setWidth(0, 2, "50px");
-		t4.getFlexCellFormatter().setWidth(0, 3, "100px");
 
 		t4.addStyleName("FlexTable");
 		t4.getRowFormatter().addStyleName(0,"FlexTable-Header");
@@ -100,8 +90,7 @@ public class BrowseView extends Composite {
 		// set headers in flextable
 		t4.setText(0, 0, "Id");
 		t4.setText(0, 1, "Navn");
-		t4.setText(0, 2, "INI");
-		t4.setText(0, 3, "CPR");
+		t4.setText(0, 2, "Initial");
 
 
 		final DeckPanel deckPanel = new DeckPanel();
@@ -145,7 +134,6 @@ public class BrowseView extends Composite {
 					t1.setText(i+1, 0, "" + result.get(i).getOprId());
 					t1.setText(i+1, 1, result.get(i).getNavn());
 					t1.setText(i+1, 2, result.get(i).getIni());
-					t1.setText(i+1, 3, "" + result.get(i).getCpr());
 				}
 			}
 		});
@@ -167,13 +155,12 @@ public class BrowseView extends Composite {
 								t2.setText(i+1, 0, "" + result.get(i).getOprId());
 								t2.setText(i+1, 1, result.get(i).getNavn());
 								t2.setText(i+1, 2, result.get(i).getIni());
-								t2.setText(i+1, 3, "" + result.get(i).getCpr());
-								if(result.get(i).isAdmin()){ t2.setText(i+1, 4, "X"); 
+								if(result.get(i).isAdmin()){ t2.setText(i+1, 3, "X"); 
+								} else { t2.setText(i+1, 3, "-"); }
+								if(result.get(i).isOperatoer()){ t2.setText(i+1, 4, "X"); 
 								} else { t2.setText(i+1, 4, "-"); }
-								if(result.get(i).isOperatoer()){ t2.setText(i+1, 5, "X"); 
+								if(result.get(i).isFarmaceut()){ t2.setText(i+1, 5, "X"); 
 								} else { t2.setText(i+1, 5, "-"); }
-								if(result.get(i).isFarmaceut()){ t2.setText(i+1, 6, "X"); 
-								} else { t2.setText(i+1, 6, "-"); }
 							}
 						}
 					});
@@ -192,7 +179,6 @@ public class BrowseView extends Composite {
 								t1.setText(i+1, 0, "" + result.get(i).getOprId());
 								t1.setText(i+1, 1, result.get(i).getNavn());
 								t1.setText(i+1, 2, result.get(i).getIni());
-								t1.setText(i+1, 3, "" + result.get(i).getCpr());
 							}
 						}
 					});
@@ -221,13 +207,12 @@ public class BrowseView extends Composite {
 								t3.setText(i+1, 0, "" + result.get(i).getOprId());
 								t3.setText(i+1, 1, result.get(i).getNavn());
 								t3.setText(i+1, 2, result.get(i).getIni());
-								t3.setText(i+1, 3, "" + result.get(i).getCpr());
-								if(result.get(i).isAdmin()){ t3.setText(i+1, 4, "X");
+								if(result.get(i).isAdmin()){ t3.setText(i+1, 3, "X");
+								} else { t3.setText(i+1, 3, "-"); }
+								if(result.get(i).isOperatoer()){ t3.setText(i+1, 4, "X"); 
 								} else { t3.setText(i+1, 4, "-"); }
-								if(result.get(i).isOperatoer()){ t3.setText(i+1, 5, "X"); 
+								if(result.get(i).isFarmaceut()){ t3.setText(i+1, 5, "X"); 
 								} else { t3.setText(i+1, 5, "-"); }
-								if(result.get(i).isFarmaceut()){ t3.setText(i+1, 6, "X"); 
-								} else { t3.setText(i+1, 6, "-"); }
 							}				
 						}
 					});
@@ -246,13 +231,12 @@ public class BrowseView extends Composite {
 								t2.setText(i+1, 0, "" + result.get(i).getOprId());
 								t2.setText(i+1, 1, result.get(i).getNavn());
 								t2.setText(i+1, 2, result.get(i).getIni());
-								t2.setText(i+1, 3, "" + result.get(i).getCpr());
-								if(result.get(i).isAdmin()){ t2.setText(i+1, 4, "X"); 
+								if(result.get(i).isAdmin()){ t2.setText(i+1, 3, "X"); 
+								} else { t2.setText(i+1, 3, "-"); }
+								if(result.get(i).isOperatoer()){ t2.setText(i+1, 4, "X"); 
 								} else { t2.setText(i+1, 4, "-"); }
-								if(result.get(i).isOperatoer()){ t2.setText(i+1, 5, "X"); 
+								if(result.get(i).isFarmaceut()){ t2.setText(i+1, 5, "X"); 
 								} else { t2.setText(i+1, 5, "-"); }
-								if(result.get(i).isFarmaceut()){ t2.setText(i+1, 6, "X"); 
-								} else { t2.setText(i+1, 6, "-"); }
 							}
 						}
 					});
@@ -283,7 +267,6 @@ public class BrowseView extends Composite {
 									t4.setText(temp, 0, "" + result.get(i).getOprId());
 									t4.setText(temp, 1, result.get(i).getNavn());
 									t4.setText(temp, 2, result.get(i).getIni());
-									t4.setText(temp, 3, "" + result.get(i).getCpr());
 								}
 							}
 						}
@@ -302,13 +285,12 @@ public class BrowseView extends Composite {
 								t3.setText(i+1, 0, "" + result.get(i).getOprId());
 								t3.setText(i+1, 1, result.get(i).getNavn());
 								t3.setText(i+1, 2, result.get(i).getIni());
-								t3.setText(i+1, 3, "" + result.get(i).getCpr());
-								if(result.get(i).isAdmin()){ t3.setText(i+1, 4, "X");
+								if(result.get(i).isAdmin()){ t3.setText(i+1, 3, "X");
+								} else { t3.setText(i+1, 3, "-"); }
+								if(result.get(i).isOperatoer()){ t3.setText(i+1, 4, "X"); 
 								} else { t3.setText(i+1, 4, "-"); }
-								if(result.get(i).isOperatoer()){ t3.setText(i+1, 5, "X"); 
+								if(result.get(i).isFarmaceut()){ t3.setText(i+1, 5, "X"); 
 								} else { t3.setText(i+1, 5, "-"); }
-								if(result.get(i).isFarmaceut()){ t3.setText(i+1, 6, "X"); 
-								} else { t3.setText(i+1, 6, "-"); }
 							}				
 						}
 					});

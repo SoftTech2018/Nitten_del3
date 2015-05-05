@@ -41,7 +41,7 @@ drop function oprID
 SELECT oprID(#1)
 UPDATE roller set admin = #1, farmaceut = #2, operatoer = #3 WHERE opr_id = #4
 SELECT * FROM oprListView
-CREATE OR REPLACE VIEW oprListView AS SELECT * FROM operatoer NATURAL JOIN roller WHERE roller.admin+roller.operatoer+roller.farmaceut>0
+CREATE OR REPLACE VIEW oprListView AS SELECT operatoer.opr_id, operatoer.opr_navn, operatoer.ini, roller.admin, roller.operatoer, roller.farmaceut FROM operatoer INNER JOIN roller ON operatoer.opr_id = roller.opr_id WHERE roller.admin+roller.operatoer+roller.farmaceut>0
 DROP PROCEDURE IF EXISTS createOPR;
 CREATE PROCEDURE createOPR(oprNAVN VARCHAR(20),init VARCHAR(20),cprNR VARCHAR(20),pass VARCHAR(20),admROLE BOOLEAN,oprROLE BOOLEAN,farmROLE BOOLEAN) BEGIN DECLARE oprID INT;INSERT INTO operatoer(opr_navn,ini,cpr,password) VALUES(oprNAVN,init,cprNR,pass);SET oprID = LAST_INSERT_ID();INSERT INTO roller(opr_id,admin,operatoer,farmaceut) VALUES(oprID,admROLE,oprROLE,farmROLE);END;
 call setView()

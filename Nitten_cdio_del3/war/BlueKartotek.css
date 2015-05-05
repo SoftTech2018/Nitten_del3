@@ -51,8 +51,8 @@ footer {
 	border-left: thin solid #444444;
 	border-right: thin solid #111111;
 	border-bottom: thin solid #111111;
-	table-layout: fixed;
-	width: 400px; 	
+	table-layout: fixed; 
+	width: 400px;	
 }
 
 .FlexTable-Cell {
