@@ -13,8 +13,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import dtu.client.service.KartotekService;
 import dtu.shared.DALException;
 import dtu.shared.OperatoerDTO;
+import dtu.shared.ReceptViewDTO;
 
-public class PersonDAO_db extends RemoteServiceServlet implements KartotekService  {
+public class PersonDAOtransient extends RemoteServiceServlet implements KartotekService  {
 
 	private static final String URL = "jdbc:mysql://localhost/kartotek";
 	private static final String USERNAME = "root";
@@ -29,7 +30,7 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 	private PreparedStatement getSizeStmt = null;
 	private PreparedStatement deletePersonStmt = null;
 
-	public PersonDAO_db() throws Exception {
+	public PersonDAOtransient() throws Exception {
 		try 
 		{
 			connection = 
@@ -196,6 +197,18 @@ public class PersonDAO_db extends RemoteServiceServlet implements KartotekServic
 		catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		} 
+	}
+
+	@Override
+	public List<ReceptViewDTO> getReceptView() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OperatoerDTO getOperatoer(int id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
