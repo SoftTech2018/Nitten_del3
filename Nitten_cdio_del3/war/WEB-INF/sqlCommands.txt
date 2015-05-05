@@ -1,7 +1,7 @@
-SELECT * FROM operatoer NATURAL JOIN roller WHERE opr_id = #1
+SELECT * FROM operatoer INNER JOIN roller ON operatoer.opr_id = roller.opr_id WHERE operatoer.opr_id = #1
 CALL createOPR('#1', '#2', '#3', '#4', #5, #6, #7)
 UPDATE operatoer SET opr_navn = '#1', ini = '#2', cpr = '#3', password = '#4' WHERE opr_id = #5
-SELECT * FROM operatoer NATURAL JOIN roller
+SELECT * FROM operatoer INNER JOIN roller ON operatoer.opr_id = roller.opr_id
 SELECT * FROM produktbatch WHERE pb_id = #1
 SELECT * FROM produktbatch
 INSERT INTO produktbatch (pb_id, status, recept_id) VALUES ( #1, #2, #3)
@@ -15,8 +15,8 @@ SELECT * FROM recept WHERE recept_id = #1
 SELECT * FROM recept
 INSERT INTO recept(recept_id, recept_navn) VALUES (#1, '#2')
 UPDATE recept SET recept_navn = '#1' WHERE recept_id = #2
-SELECT * FROM receptkomponent WHERE recept_id = #1 and raavare_id = #2
-SELECT * FROM receptkomponent where recept_id = #1
+SELECT * FROM receptkomponent WHERE recept_id = #1 AND raavare_id = #2
+SELECT * FROM receptkomponent WHERE recept_id = #1
 SELECT * FROM receptkomponent
 INSERT INTO receptkomponent (recept_id, raavare_id, nom_netto, tolerance) VALUES (#1, #2, #3, #4)
 UPDATE receptkomponent SET nom_netto = #1, tolerance = #2 WHERE recept_id = #3 and raavare_id = #4
@@ -30,21 +30,21 @@ SELECT * FROM raavare
 INSERT INTO raavare(raavare_id, raavare_navn, leverandoer) VALUES (#1, '#2', '#3')
 UPDATE raavare SET raavare_navn = '#1', leverandoer = '#2' WHERE raavare_id = #3
 CREATE TRIGGER oprTrig BEFORE INSERT ON operatoer FOR EACH ROW SET new.ini = 'trigger aktiveret!'
-select * from oprView
+SELECT * FROM oprView
 CREATE PROCEDURE setView() begin CREATE VIEW oprView AS SELECT opr_id, opr_navn, ini FROM operatoer; END;
-call setView()
+CALL setView()
 CREATE FUNCTION oprID(oID INT) RETURNS VARCHAR(20) BEGIN DECLARE navn VARCHAR(20); SELECT opr_navn INTO navn FROM operatoer WHERE opr_id = oID; RETURN navn; END;
-drop view oprView
-drop trigger oprTrig
-drop procedure setView
-drop function oprID
+DROP VIEW oprView
+DROP TRIGGER oprTrig
+DROP PROCEDURE setView
+DROP FUNCTION oprID
 SELECT oprID(#1)
 UPDATE roller set admin = #1, farmaceut = #2, operatoer = #3 WHERE opr_id = #4
 SELECT * FROM oprListView
 CREATE OR REPLACE VIEW oprListView AS SELECT operatoer.opr_id, operatoer.opr_navn, operatoer.ini, roller.admin, roller.operatoer, roller.farmaceut FROM operatoer INNER JOIN roller ON operatoer.opr_id = roller.opr_id WHERE roller.admin+roller.operatoer+roller.farmaceut>0
 DROP PROCEDURE IF EXISTS createOPR;
 CREATE PROCEDURE createOPR (oprNAVN VARCHAR(20),init VARCHAR(20),cprNR VARCHAR(20),pass VARCHAR(20),admROLE BOOLEAN,oprROLE BOOLEAN,farmROLE BOOLEAN) BEGIN DECLARE oprID INT; START TRANSACTION; INSERT INTO operatoer(opr_navn,ini,cpr,password) VALUES(oprNAVN,init,cprNR,pass); SET oprID = LAST_INSERT_ID(); INSERT INTO roller(opr_id,admin,operatoer,farmaceut) VALUES(oprID,admROLE,oprROLE,farmROLE); IF ((SELECT roller.admin FROM roller WHERE roller.opr_id = oprID) = admROLE) THEN COMMIT; ELSE ROLLBACK; END IF; END;
-call setView()
+CALL setView()
 CREATE FUNCTION oprID(oID INT) RETURNS VARCHAR(20) BEGIN DECLARE navn VARCHAR(20); SELECT opr_navn INTO navn FROM operatoer WHERE opr_id = oID; RETURN navn; END;
-select * from oprView
+SELECT * FROM oprView
 SELECT raavare.raavare_navn, receptkomponent.nom_netto FROM receptkomponent INNER JOIN raavare ON receptkomponent.raavare_id = raavare.raavare_id AND receptkomponent.recept_id = #1
