@@ -19,6 +19,7 @@ import dtu.shared.FieldVerifier;
 import dtu.shared.OperatoerDTO;
 
 public class AddView extends Composite {
+	
 	VerticalPanel addPanel;
 	FlexTable ft;
 
@@ -31,8 +32,6 @@ public class AddView extends Composite {
 	CheckBox operatoerCB;
 	CheckBox farmCB;
 
-	boolean nameValid = false;
-	boolean cprValid = false;
 	boolean adminValue = false;
 	boolean operatoerValue = false;
 	boolean farmValue = false;
@@ -98,13 +97,10 @@ public class AddView extends Composite {
 			public void onKeyUp(KeyUpEvent event) {
 				if (!FieldVerifier.isValidName(nameTxt.getText())) {
 					nameTxt.setStyleName("gwt-TextBox-invalidEntry");
-					nameValid = false;
 				}
 				else {
 					nameTxt.removeStyleName("gwt-TextBox-invalidEntry");
-					nameValid = true;
 				}
-
 				checkFormValid();
 			}
 		});
@@ -113,11 +109,11 @@ public class AddView extends Composite {
 
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
+				
 				if(!FieldVerifier.isValidCPR(cprTxt.getText())){
 					cprTxt.setStyleName("gwt-TextBox-invalidEntry");
 				} else {
 					cprTxt.removeStyleName("gwt-TextBox-invalidEntry");
-					cprValid = true;
 				}
 				checkFormValid();
 			}
@@ -151,7 +147,7 @@ public class AddView extends Composite {
 	}
 
 	private void checkFormValid() {
-		if (nameValid && cprValid && (adminValue||operatoerValue||farmValue))
+		if (FieldVerifier.isValidName(AddView.this.nameTxt.getText()) && FieldVerifier.isValidCPR(AddView.this.cprTxt.getText()) && (adminValue||operatoerValue||farmValue))
 			save.setEnabled(true);
 		else
 			save.setEnabled(false);

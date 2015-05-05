@@ -49,14 +49,6 @@ public class FieldVerifier {
 		return name.length() <= 30;
 	}
 	
-	public static boolean isValidAge(String age) {
-		if (age.matches("[0-9]+"))
-			// max 100 �r
-			return Integer.parseInt(age) < 100 ? true : false;
-		else
-			return false;	
-	}
-	
 	public static boolean isValidCPR(String cpr) {
 		
 		for (int i=0; i < cpr.length(); i++){
