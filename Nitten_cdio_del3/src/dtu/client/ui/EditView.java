@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -29,6 +30,8 @@ public class EditView extends Composite {
 	private TextBox cprTxt;
 	private CheckBox adminChk, farmChk, oprChk;
 	final Anchor ok = new Anchor("ok");
+	Anchor edit = new Anchor("edit");
+	private Label status;
 
 	// valid fields - initially a field is valid
 	boolean nameValid = true;
@@ -38,15 +41,10 @@ public class EditView extends Composite {
 	boolean oprValue;
 	
 	int eventRowIndex;
-
 	KartotekServiceClientImpl clientImpl;
-
-	// person list
-	List<OperatoerDTO> personer;
 
 	// previous cancel anchor
 	Anchor previousCancel = null;
-	List<OperatoerDTO> result;
 
 	public EditView(KartotekServiceClientImpl clientImpl) {
 		this.clientImpl = clientImpl;
@@ -89,7 +87,6 @@ public class EditView extends Composite {
 
 			@Override
 			public void onSuccess(List<OperatoerDTO> result) {
-				EditView.this.result = result;
 				// populate table and add delete anchor to each row
 				for (int rowIndex=0; rowIndex < result.size(); rowIndex++) {
 					t.setText(rowIndex+1, 0, "" + result.get(rowIndex).getOprId());
@@ -117,8 +114,10 @@ public class EditView extends Composite {
 			}
 
 		});
+		status = new Label("");
 
 		editPanel.add(t);
+		editPanel.add(status);
 
 		// text boxes
 		nameTxt = new TextBox();
@@ -141,6 +140,7 @@ public class EditView extends Composite {
 	}
 
 	private class EditHandler implements ClickHandler {
+		
 		public void onClick(ClickEvent event) {
 			// if previous edit open - force cancel operation�
 			if (previousCancel != null)
@@ -173,7 +173,7 @@ public class EditView extends Composite {
 			nameTxt.setFocus(true);
 
 			// get edit anchor ref for cancel operation
-			final Anchor edit = (Anchor) event.getSource();
+			edit = (Anchor) event.getSource();
 
 			// get textbox contents for cancel operation
 			final String ini = iniTxt.getText();
@@ -203,23 +203,29 @@ public class EditView extends Composite {
 					farm.setEnabled(false);
 					farm.setValue(farmChk.getValue());
 					t.setWidget(eventRowIndex, 6, farm);
+					clientImpl.service.getOperatoer(Integer.parseInt(t.getText(eventRowIndex, 0)), new AsyncCallback<OperatoerDTO>(){
+						String name;
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
 
-					// here you will normally fetch the primary key of the row 
-					// and use it for location the object to be edited
-					for (OperatoerDTO pers : result){
-						if (pers.getOprId() == Integer.parseInt(t.getText(eventRowIndex, 0))){
-							pers.setNavn(nameTxt.getText());
-							pers.setIni(iniTxt.getText());
-							pers.setCpr(cprTxt.getText());
-							pers.setAdmin(adminChk.getValue());
-							pers.setFarmaceut(farmChk.getValue());
-							pers.setOperatoer(oprChk.getValue());
+						@Override
+						public void onSuccess(OperatoerDTO result) {
+							result.setNavn(nameTxt.getText());
+							name = result.getNavn();
+							result.setIni(iniTxt.getText());
+							result.setCpr(cprTxt.getText());
+							result.setAdmin(adminChk.getValue());
+							result.setFarmaceut(farmChk.getValue());
+							result.setOperatoer(oprChk.getValue());
 							// V.2
-							clientImpl.service.updatePerson(pers, new AsyncCallback<Void>() {
+							clientImpl.service.updatePerson(result, new AsyncCallback<Void>() {
 								
 								@Override
 								public void onSuccess(Void result) {
-									Window.alert("Personen blev opdateret!");
+									status.setText("Status: " + name + " blev opdateret!");
 								}
 								
 								@Override
@@ -227,9 +233,9 @@ public class EditView extends Composite {
 									Window.alert("Server fejl!" + caught.getMessage());
 								}
 							});
-							break;
 						}
-					}
+						
+					});
 
 					// restore edit link
 					t.setWidget(eventRowIndex, 7, edit);

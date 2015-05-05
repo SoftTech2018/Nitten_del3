@@ -55,6 +55,15 @@ footer {
 	width: 400px;	
 }
 
+.FlexTableLogin {
+	border-top: thin solid #444444;
+	border-left: thin solid #444444;
+	border-right: thin solid #111111;
+	border-bottom: thin solid #111111;
+	width: 300px;
+	padding:10px 10px 10px 10px;		
+}
+
 .FlexTable-Cell {
 	vertical-align: top;
 }
