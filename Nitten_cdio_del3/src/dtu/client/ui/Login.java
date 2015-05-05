@@ -33,17 +33,20 @@ public class Login extends Composite {
 		initWidget(vPan);
 
 		final FlexTable t = new FlexTable();
-		t.getFlexCellFormatter().setWidth(0, 0, "150px");
+		t.addStyleName("FlexTableLogin");
+		t.getFlexCellFormatter().setWidth(0, 0, "80px");
 		t.getFlexCellFormatter().setWidth(0, 1, "200px");
+		t.setBorderWidth(0);
 
 		userName = new Label("Bruger-ID:");
 		password = new Label("Password:");
 		user = new TextBox();
 		pass = new PasswordTextBox();
 		btn1 = new Button("Ok");
+		btn1.setWidth("65px");
 		loginStatus = new Label("");
-		user.setWidth("180px");
-		pass.setWidth("180px");
+		user.setWidth("185px");
+		pass.setWidth("185px");
 
 		btn1.addClickHandler(new BtnClickHandler());
 
@@ -66,37 +69,43 @@ public class Login extends Composite {
 		public void onClick(ClickEvent event) {
 			username = user.getText();
 			password = pass.getText();
-			clientImpl.service.getOperatoer(Integer.parseInt(username), new AsyncCallback<OperatoerDTO>(){
+			int id = -1;
+			try {
+				id = Integer.parseInt(username);
+				clientImpl.service.getOperatoer(id, new AsyncCallback<OperatoerDTO>(){
 
-				@Override
-				public void onFailure(Throwable caught) {
-					loginStatus.setText("FEJL! " + caught.getMessage()); // Såfremt operatør-id ikke findes vises det her.
-				}
+					@Override
+					public void onFailure(Throwable caught) {
+						loginStatus.setText("FEJL! " + caught.getMessage()); // Såfremt operatør-id ikke findes vises det her.
+					}
 
-				@Override
-				public void onSuccess(OperatoerDTO result) {
-					if (result.getOprId() == Integer.parseInt(username)){
-						if (result.getPassword().equals(password)){
-							if (result.isAdmin()){
-								RootPanel.get("section").clear();
-								new MainView(clientImpl, "ADMIN").run();
-							} else if (result.isFarmaceut()){
-								loginStatus.setText("Du er en farmaceut.");
-//								RootPanel.get("section").clear();
-//								new MainView(clientImpl, "FARMACEUT").run();
-							} else if (result.isOperatoer()){
-								loginStatus.setText("Du er en operatør.");
-//								RootPanel.get("section").clear();
-//								new MainView(clientImpl, "OPERATOER").run();
+					@Override
+					public void onSuccess(OperatoerDTO result) {
+						if (result.getOprId() == Integer.parseInt(username)){
+							if (result.getPassword().equals(password)){
+								if (result.isAdmin()){
+									RootPanel.get("section").clear();
+									new MainView(clientImpl, "ADMIN").run();
+								} else if (result.isFarmaceut()){
+									loginStatus.setText("Du er en farmaceut.");
+									//								RootPanel.get("section").clear();
+									//								new MainView(clientImpl, "FARMACEUT").run();
+								} else if (result.isOperatoer()){
+									loginStatus.setText("Du er en operatør.");
+									//								RootPanel.get("section").clear();
+									//								new MainView(clientImpl, "OPERATOER").run();
+								} else {
+									loginStatus.setText("Du har ikke adgang til at logge ind.");
+								}
 							} else {
-								loginStatus.setText("Du har ikke adgang til at logge ind.");
+								loginStatus.setText("Forkert password!");
 							}
-						} else {
-							loginStatus.setText("Forkert password!");
 						}
 					}
-				}
-			});
-		} 			
+				});
+			} catch (NumberFormatException e){
+				loginStatus.setText("Ugyldigt bruger-id.");
+			}	
+		}
 	}
 }
