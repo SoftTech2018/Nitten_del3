@@ -72,15 +72,17 @@ public class AddView extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 
-				Window.alert("Person gemt i kartotek");
-
 				OperatoerDTO newPerson = new OperatoerDTO(99, nameTxt.getText(), nameTxt.getText().substring(0, 3), cprTxt.getText(), "02324it!", adminCB.getValue(), operatoerCB.getValue(), farmCB.getValue());
-
 				clientImpl.service.savePerson(newPerson, new AsyncCallback<Void>() {
 
 					@Override
 					public void onSuccess(Void result) {
 						Window.alert("Person gemt i kartotek");
+						nameTxt.setText("");
+						cprTxt.setText("");
+						adminCB.setValue(false);
+						farmCB.setValue(false);
+						operatoerCB.setValue(false);
 					}
 
 					@Override
