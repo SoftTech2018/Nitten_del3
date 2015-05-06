@@ -49,3 +49,4 @@ CREATE FUNCTION oprID(oID INT) RETURNS VARCHAR(20) BEGIN DECLARE navn VARCHAR(20
 SELECT * FROM oprView
 SELECT raavare.raavare_navn, receptkomponent.nom_netto FROM receptkomponent INNER JOIN raavare ON receptkomponent.raavare_id = raavare.raavare_id AND receptkomponent.recept_id = #1
 CREATE OR REPLACE VIEW view_prodbatchkompinfo AS SELECT DISTINCT recept.recept_id, recept_navn, netto, produktbatch.pb_id, operatoer.opr_id, opr_navn, status FROM recept INNER JOIN produktbatch ON recept.recept_id = produktbatch.recept_id INNER JOIN produktbatchkomponent ON produktbatch.pb_id = produktbatchkomponent.pb_id INNER JOIN operatoer ON produktbatchkomponent.opr_id = operatoer.opr_id ORDER BY produktbatch.pb_id;
+SELECT * FROM view_prodbatchkompinfo

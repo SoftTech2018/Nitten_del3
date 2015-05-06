@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import dtu.shared.OperatoerDTO;
+import dtu.shared.ProdBatchInfo;
 import dtu.shared.ReceptViewDTO;
 
 
@@ -25,4 +26,5 @@ public interface KartotekService extends RemoteService {
 	public List<OperatoerDTO> getOprView() throws Exception;
 	public List<ReceptViewDTO> getReceptView() throws Exception;
 	public OperatoerDTO getOperatoer(int id) throws Exception;
+	List<ProdBatchInfo> getProdBatchInfoView() throws Exception;
 }

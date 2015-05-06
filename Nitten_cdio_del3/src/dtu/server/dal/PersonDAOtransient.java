@@ -13,6 +13,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import dtu.client.service.KartotekService;
 import dtu.shared.DALException;
 import dtu.shared.OperatoerDTO;
+import dtu.shared.ProdBatchInfo;
 import dtu.shared.ReceptViewDTO;
 
 public class PersonDAOtransient extends RemoteServiceServlet implements KartotekService  {
@@ -207,6 +208,12 @@ public class PersonDAOtransient extends RemoteServiceServlet implements Kartotek
 
 	@Override
 	public OperatoerDTO getOperatoer(int id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProdBatchInfo> getProdBatchInfoView() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -8,18 +8,20 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import dtu.client.service.KartotekService;
 import dtu.server.dal.dbconnection.connector.Connector;
 import dtu.server.dal.dbconnection.daoimpl.OperatoerDAO;
+import dtu.server.dal.dbconnection.daoimpl.ProduktBatchKompDAO;
 import dtu.server.dal.dbconnection.daoimpl.ReceptDAO;
 import dtu.server.dal.dbconnection.daoimpl.TextReader;
 import dtu.server.dal.dbconnection.daointerfaces.DALException;
 import dtu.server.dal.dbconnection.daointerfaces.IOperatoerDAO;
 import dtu.shared.OperatoerDTO;
+import dtu.shared.ProdBatchInfo;
 import dtu.shared.ReceptViewDTO;
 
 public class PersonDAO extends RemoteServiceServlet implements KartotekService  {
 
 	private IOperatoerDAO oprDAO;
 //	private IProduktBatchDAO prodBatchDAO;
-//	private IProduktBatchKompDAO prodBatchKompDAO;
+	private ProduktBatchKompDAO prodBatchKompDAO;
 	private ReceptDAO receptDAO;
 //	private IReceptKompDAO receptKompDAO;
 //	private IRaavareBatchDAO raavareBatchDAO;
@@ -35,7 +37,7 @@ public class PersonDAO extends RemoteServiceServlet implements KartotekService  
 		TextReader txt = new TextReader();
 		oprDAO = new OperatoerDAO(txt);
 //		prodBatchDAO = new ProduktBatchDAO(txt);
-//		prodBatchKompDAO = new ProduktBatchKompDAO(txt);
+		prodBatchKompDAO = new ProduktBatchKompDAO(txt);
 		receptDAO = new ReceptDAO(txt);
 //		receptKompDAO = new ReceptKompDAO(txt);
 //		raavareBatchDAO = new RaavareBatchDAO(txt);
@@ -97,5 +99,10 @@ public class PersonDAO extends RemoteServiceServlet implements KartotekService  
 		} catch (DALException e){
 			throw new Exception(e.getMessage());
 		}
+	}
+	
+	@Override
+	public List<ProdBatchInfo> getProdBatchInfoView() throws Exception{
+		return prodBatchKompDAO.getProdBatchInfoView();
 	}
 }

@@ -60,4 +60,8 @@ public class MainView  {
 	public void showRecept() {
 		contentView.openReceptView();		
 	}
+
+	public void showPBK() {
+		contentView.openPBKView();		
+	}
 }

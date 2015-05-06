@@ -58,6 +58,15 @@ public class MenuView extends Composite {
 			}
 		});
 		
+		Anchor showPBK = new Anchor("Vis PB_info");
+		vPanel.add(showPBK);
+		// call back the controller
+		showPBK.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event){				
+				main.showPBK();
+			}
+		});
+		
 		Anchor logout = new Anchor("Log ud");
 		logout.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event){				

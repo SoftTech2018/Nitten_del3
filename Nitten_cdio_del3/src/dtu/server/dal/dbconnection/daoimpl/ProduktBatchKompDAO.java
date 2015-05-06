@@ -10,6 +10,7 @@ import dtu.server.dal.dbconnection.connector.Connector;
 import dtu.server.dal.dbconnection.daointerfaces.DALException;
 import dtu.server.dal.dbconnection.daointerfaces.IProduktBatchKompDAO;
 import dtu.server.dal.dbconnection.dto.ProduktBatchKompDTO;
+import dtu.shared.ProdBatchInfo;
 
 public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
 	
@@ -48,6 +49,17 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
 		try {
 			while (rs.next()) {
 				list.add(new ProduktBatchKompDTO(rs.getInt("pb_id"), rs.getInt("rb_id"), rs.getDouble("tara"),rs.getDouble("netto"),rs.getInt("opr_id")));
+			}
+		} catch (SQLException e) { throw new DALException(e); }
+		return list;
+	}
+	
+	public List<ProdBatchInfo> getProdBatchInfoView() throws DALException{
+		List<ProdBatchInfo> list = new ArrayList<ProdBatchInfo>();
+		ResultSet rs = Connector.doQuery(txt.getCommand(52));
+		try {
+			while (rs.next()) {
+				list.add(new ProdBatchInfo(rs.getInt("recept_id"), rs.getString("recept_navn"), rs.getDouble("netto"), rs.getInt("pb_id"), rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getInt("status")));
 			}
 		} catch (SQLException e) { throw new DALException(e); }
 		return list;

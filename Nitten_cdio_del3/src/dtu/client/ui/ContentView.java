@@ -72,5 +72,11 @@ public class ContentView extends Composite {
 		contentPanel.add(browseRecept);
 	}
 
+	public void openPBKView() {
+		contentPanel.clear();
+		BrowseProdKomp pbk = new BrowseProdKomp(clientImpl);
+		contentPanel.add(pbk);
+	}
+
 
 }
