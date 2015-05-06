@@ -17,7 +17,8 @@ public class OperatoerDAO implements IOperatoerDAO {
 	
 	public OperatoerDAO(TextReader txt) throws FileNotFoundException, DALException{
 		this.txt = txt;
-		Connector.doUpdate(txt.getCommand(44));
+		Connector.doUpdate(txt.getCommand(44)); // Opretter view: view_oprlist
+		Connector.doUpdate(txt.getCommand(51)); // Opretter view: view_produktbatchkompinfo
 		this.setProcedure();
 	}
 	
