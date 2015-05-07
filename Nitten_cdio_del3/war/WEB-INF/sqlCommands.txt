@@ -10,7 +10,7 @@ SELECT * FROM produktbatchkomponent WHERE pb_id = #1 and rb_id = #2
 SELECT * FROM produktbatchkomponent where pb_id = #1
 SELECT * FROM produktbatchkomponent
 INSERT INTO produktbatchkomponent (pb_id, rb_id, tara, netto, opr_id) VALUES (#1, #2, #3, #4, #5)
-UPDATE produktbatchkomponent SET tara = #1, netto = #2, opr_id#3 WHERE pb_id = #4 and rb_id = #5
+UPDATE produktbatchkomponent SET tara = #1, netto = #2, opr_id = #3 WHERE pb_id = #4 and rb_id = #5
 SELECT * FROM recept WHERE recept_id = #1
 SELECT * FROM recept
 INSERT INTO recept(recept_id, recept_navn) VALUES (#1, '#2')

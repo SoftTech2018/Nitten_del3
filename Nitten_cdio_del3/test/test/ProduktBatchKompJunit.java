@@ -10,19 +10,28 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import connector.Connector;
-import daoimpl.ProduktBatchKompDAO;
-import daointerfaces.DALException;
-import daointerfaces.IProduktBatchKompDAO;
-import dto.ProduktBatchDTO;
-import dto.ProduktBatchKompDTO;
+import dtu.server.dal.dbconnection.connector.Connector;
+import dtu.server.dal.dbconnection.daoimpl.ProduktBatchKompDAO;
+import dtu.server.dal.dbconnection.daoimpl.TextReader;
+import dtu.server.dal.dbconnection.daointerfaces.DALException;
+import dtu.server.dal.dbconnection.daointerfaces.IProduktBatchKompDAO;
+import dtu.server.dal.dbconnection.dto.ProduktBatchKompDTO;
+
+
 
 public class ProduktBatchKompJunit {
 	
-	IProduktBatchKompDAO produktBKDAO;
+	static IProduktBatchKompDAO produktBKDAO;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		try { new Connector(); } 
+		catch (InstantiationException e) { e.printStackTrace(); }
+		catch (IllegalAccessException e) { e.printStackTrace(); }
+		catch (ClassNotFoundException e) { e.printStackTrace(); }
+		catch (SQLException e) { e.printStackTrace(); }
+		TextReader txt = new TextReader("WAR");
+		produktBKDAO = new ProduktBatchKompDAO(txt);
 	}
 
 	@AfterClass
@@ -31,13 +40,6 @@ public class ProduktBatchKompJunit {
 
 	@Before
 	public void setUp() throws Exception {
-		try { new Connector(); } 
-		catch (InstantiationException e) { e.printStackTrace(); }
-		catch (IllegalAccessException e) { e.printStackTrace(); }
-		catch (ClassNotFoundException e) { e.printStackTrace(); }
-		catch (SQLException e) { e.printStackTrace(); }
-		
-		produktBKDAO = new ProduktBatchKompDAO();
 	}
 
 	@After
@@ -77,21 +79,4 @@ public class ProduktBatchKompJunit {
 		} catch (DALException e) {e.printStackTrace();}		
 	}
 	
-	@Test
-	public void updateProduktBatchKompTest() {
-		int pbID = 0, rbID = 0;
-		try {
-			for(ProduktBatchKompDTO pbkDto : produktBKDAO.getProduktBatchKompList()){
-				if (String.valueOf(pbkDto.getTara()).startsWith("10")){
-					pbID = pbkDto.getPbId();
-					rbID = pbkDto.getRbId();
-					break;
-				}				
-			}
-			double tara = produktBKDAO.getProduktBatchKomp(pbID, rbID).getTara();
-			produktBKDAO.updateProduktBatchKomp(new ProduktBatchKompDTO(pbID, rbID, tara+400,produktBKDAO.getProduktBatchKomp(pbID, rbID).getNetto(), produktBKDAO.getProduktBatchKomp(pbID, rbID).getOprId()));
-			assertEquals(400+tara, produktBKDAO.getProduktBatchKomp(pbID, rbID).getTara(), 0.01);
-		} catch (DALException e) {e.printStackTrace();}		
-	}
-
 }
