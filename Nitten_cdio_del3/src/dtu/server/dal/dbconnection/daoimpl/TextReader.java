@@ -13,11 +13,11 @@ import javax.servlet.ServletContext;
 import com.google.gwt.core.client.GWT;
 
 import dtu.shared.OperatoerDTO;
+import dtu.shared.ReceptDTO;
 import dtu.server.dal.dbconnection.dto.ProduktBatchDTO;
 import dtu.server.dal.dbconnection.dto.ProduktBatchKompDTO;
 import dtu.server.dal.dbconnection.dto.RaavareBatchDTO;
 import dtu.server.dal.dbconnection.dto.RaavareDTO;
-import dtu.server.dal.dbconnection.dto.ReceptDTO;
 import dtu.server.dal.dbconnection.dto.ReceptKompDTO;
 
 public class TextReader {

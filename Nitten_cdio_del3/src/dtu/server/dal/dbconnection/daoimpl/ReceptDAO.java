@@ -46,12 +46,12 @@ public class ReceptDAO implements IReceptDAO {
 
 	@Override
 	public void createRecept(ReceptDTO recept) throws DALException {
-//		Connector.doUpdate(txt.createRecept(recept));
+		Connector.doUpdate(txt.createRecept(recept));
 	}
 
 	@Override
 	public void updateRecept(ReceptDTO recept) throws DALException {
-//		Connector.doUpdate(txt.updateRecept(recept));
+		Connector.doUpdate(txt.updateRecept(recept));
 	}
 
 	public List<ReceptViewDTO> getReceptView() throws DALException {

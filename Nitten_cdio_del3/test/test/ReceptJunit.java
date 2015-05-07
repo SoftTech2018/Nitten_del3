@@ -15,7 +15,7 @@ import dtu.server.dal.dbconnection.daoimpl.ReceptDAO;
 import dtu.server.dal.dbconnection.daoimpl.TextReader;
 import dtu.server.dal.dbconnection.daointerfaces.DALException;
 import dtu.server.dal.dbconnection.daointerfaces.IReceptDAO;
-import dtu.shared.ReceptViewDTO;
+import dtu.shared.ReceptDTO;
 
 public class ReceptJunit {
 	
@@ -65,7 +65,7 @@ public class ReceptJunit {
 			}
 			rcpID++;
 			String test = "test"+rcpID;
-			receptDAO.createRecept(new ReceptViewDTO(rcpID, test));
+			receptDAO.createRecept(new ReceptDTO(rcpID, test));
 			assertEquals(test, receptDAO.getRecept(rcpID).getReceptNavn());
 		} catch (DALException e) {e.printStackTrace();}		
 	}
@@ -75,7 +75,6 @@ public class ReceptJunit {
 		int rcpID = 1;
 		try {			
 			String name = "update";
-			System.out.println(name);
 			receptDAO.updateRecept(new ReceptDTO(rcpID, name));
 			assertEquals(name, receptDAO.getRecept(rcpID).getReceptNavn());
 		} catch (DALException e) {e.printStackTrace();}		
