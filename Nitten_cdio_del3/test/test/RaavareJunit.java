@@ -10,18 +10,26 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import connector.Connector;
-import daoimpl.RaavareDAO;
-import daointerfaces.DALException;
-import daointerfaces.IRaavareDAO;
-import dto.RaavareDTO;
+import dtu.server.dal.dbconnection.connector.Connector;
+import dtu.server.dal.dbconnection.daoimpl.RaavareDAO;
+import dtu.server.dal.dbconnection.daoimpl.TextReader;
+import dtu.server.dal.dbconnection.daointerfaces.DALException;
+import dtu.server.dal.dbconnection.daointerfaces.IRaavareDAO;
+import dtu.server.dal.dbconnection.dto.RaavareDTO;
 
 public class RaavareJunit {
 	
-	IRaavareDAO raavareDAO;
+	static IRaavareDAO raavareDAO;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		try { new Connector(); } 
+		catch (InstantiationException e) { e.printStackTrace(); }
+		catch (IllegalAccessException e) { e.printStackTrace(); }
+		catch (ClassNotFoundException e) { e.printStackTrace(); }
+		catch (SQLException e) { e.printStackTrace(); }
+		TextReader txt = new TextReader("WAR");
+		raavareDAO = new RaavareDAO(txt);
 	}
 
 	@AfterClass
@@ -30,13 +38,6 @@ public class RaavareJunit {
 
 	@Before
 	public void setUp() throws Exception {		
-		try { new Connector(); } 
-		catch (InstantiationException e) { e.printStackTrace(); }
-		catch (IllegalAccessException e) { e.printStackTrace(); }
-		catch (ClassNotFoundException e) { e.printStackTrace(); }
-		catch (SQLException e) { e.printStackTrace(); }
-		
-		raavareDAO = new RaavareDAO();
 	}
 
 	@After
@@ -70,15 +71,9 @@ public class RaavareJunit {
 	
 	@Test
 	public void updateRaavareTest() {
-		int rID = 0;
+		int rID = 1;
 		try {
-			for(RaavareDTO rDto : raavareDAO.getRaavareList()){
-				if (rDto.getRaavareNavn().startsWith("test")){
-					rID = rDto.getRaavareId();
-					break;
-				}				
-			}
-			String update = "update "+raavareDAO.getRaavare(rID).getRaavareNavn();
+			String update = "update";
 			raavareDAO.updateRaavare(new RaavareDTO(rID, update, update));
 			assertEquals(update, raavareDAO.getRaavare(rID).getRaavareNavn());
 		} catch (DALException e) {e.printStackTrace();}		
