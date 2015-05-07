@@ -30,6 +30,12 @@ public class TextReader {
 		sqlFileCommands = new File("WEB-INF/sqlCommands.txt");
 		sqlCommands = readFile(sqlFileCommands);
 		illegalString = "#";
+	}	
+
+	public TextReader(String path) throws FileNotFoundException{
+		sqlFileCommands = new File(path+"/WEB-INF/sqlCommands.txt");
+		sqlCommands = readFile(sqlFileCommands);
+		illegalString = "#";
 	}
 	
 	private String[] readFile(File fil) throws FileNotFoundException{
