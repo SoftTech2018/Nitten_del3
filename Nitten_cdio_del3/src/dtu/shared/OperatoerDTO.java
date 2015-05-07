@@ -38,7 +38,7 @@ public class OperatoerDTO implements Serializable {
 	public OperatoerDTO(OperatoerDTO opr)
 	{
 		this.oprId = opr.getOprId();
-		this.navn = opr.getOprNavn();
+		this.navn = opr.getNavn();
 		this.ini = opr.getIni();
 		this.cpr = opr.getCpr();
 		this.password = opr.getPassword();
@@ -85,14 +85,6 @@ public class OperatoerDTO implements Serializable {
 
 	public void setOprId(int oprId) { 
 		this.oprId = oprId; 
-	}
-
-	public String getOprNavn() { 
-		return navn;
-	}
-
-	public void setOprNavn(String oprNavn) { 
-		this.navn = oprNavn; 
 	}
 
 	public String getIni() { 

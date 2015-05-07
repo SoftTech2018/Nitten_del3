@@ -75,7 +75,7 @@ public class TextReader {
 	
 	public String updateOperatoer(OperatoerDTO opr){
 		String output = sqlCommands[3];
-		output = output.replaceFirst(illegalString + "1", opr.getOprNavn());
+		output = output.replaceFirst(illegalString + "1", opr.getNavn());
 		output = output.replaceFirst(illegalString + "2", opr.getIni());
 		output = output.replaceFirst(illegalString + "3", opr.getCpr());
 		output = output.replaceFirst(illegalString + "4", opr.getPassword());

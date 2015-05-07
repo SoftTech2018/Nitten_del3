@@ -1,221 +1,134 @@
 package dtu.server.dal;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import dtu.client.service.KartotekService;
-import dtu.shared.DALException;
+import dtu.shared.IngrediensDTO;
 import dtu.shared.OperatoerDTO;
 import dtu.shared.ProdBatchInfo;
 import dtu.shared.ReceptViewDTO;
 
 public class PersonDAOtransient extends RemoteServiceServlet implements KartotekService  {
 
-	private static final String URL = "jdbc:mysql://localhost/kartotek";
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "";
-
-	private Connection connection = null; // manages connection
-
-	private PreparedStatement savePersonStmt = null;
-	private PreparedStatement updatePersonStmt = null;
-	private PreparedStatement getPersonsStmt = null;
-	private PreparedStatement getOprViewStmt = null;
-	private PreparedStatement getSizeStmt = null;
-	private PreparedStatement deletePersonStmt = null;
+	private List<OperatoerDTO> oprList;
+	private List<ReceptViewDTO> receptViewList;
+	private List<ProdBatchInfo> prodList;
+	private int oprID;
 
 	public PersonDAOtransient() throws Exception {
-		try 
-		{
-			connection = 
-					DriverManager.getConnection( URL, USERNAME, PASSWORD );
-
-			// create query that add a person to kartotek
-			savePersonStmt = 
-					connection.prepareStatement( "INSERT INTO person " + 
-							"( navn, alder ) " + 
-							"VALUES ( ?, ? )" );
-
-			// create query that updates a person
-			updatePersonStmt = connection.prepareStatement( 
-					"UPDATE person SET navn = ?, alder = ?  WHERE id = ?" );
-
-			// create query that get all persons in kartotek
-			getPersonsStmt = connection.prepareStatement( 
-					"SELECT * FROM person ");
-
-			// create query that get all persons in kartotek
-			getOprViewStmt = connection.prepareStatement( 
-					"SELECT * FROM oprView ");
-			
-			// create query that gets size of kartotek
-			getSizeStmt = connection.prepareStatement( 
-					"SELECT COUNT(*) FROM person ");
-
-			// create query that deletes a person in kartotek
-			deletePersonStmt = connection.prepareStatement( 
-					"DELETE FROM person WHERE id =  ? ");
-
-
-		} 
-		catch ( SQLException sqlException )
-		{
-			throw new DALException("Kan ikke oprette forbindelse til database");
-		}
+		oprList = new ArrayList<OperatoerDTO>();
+		receptViewList = new ArrayList<ReceptViewDTO>();
+		prodList = new ArrayList<ProdBatchInfo>();
+		oprID = 1;
+		
+		//Create test data
+		this.setup();
+	}
+	
+	private void setup() throws Exception{
+		this.savePerson(new OperatoerDTO(-1, "Hans", "HA", "123456-7890", "02324it!", true, false, false));
+		this.savePerson(new OperatoerDTO(-1, "Grete", "GR", "987654-3210", "02324it!", false, true, false));
+		this.savePerson(new OperatoerDTO(-1, "Grimm", "GI", "025814-9637", "02324it!", false, false, true));
+		
+		List<IngrediensDTO> ingr = new ArrayList<IngrediensDTO>();
+		ingr.add(new IngrediensDTO("Humle", 0.8));
+		ingr.add(new IngrediensDTO("Vand", 0.8));
+		ingr.add(new IngrediensDTO("Flaske", 1));
+		receptViewList.add(new ReceptViewDTO(1, "Øl", ingr));
+		
+		List<IngrediensDTO> ingr2 = new ArrayList<IngrediensDTO>();
+		ingr2.add(new IngrediensDTO("Dej", 1));
+		ingr2.add(new IngrediensDTO("Tomat", 5.4));
+		ingr2.add(new IngrediensDTO("Ost", 8.7));
+		ingr2.add(new IngrediensDTO("Skinke", 2.5));
+		receptViewList.add(new ReceptViewDTO(2, "Pizza", ingr2));
+		
+		List<IngrediensDTO> ingr3 = new ArrayList<IngrediensDTO>();
+		ingr3.add(new IngrediensDTO("Havsalt", 88));
+		ingr3.add(new IngrediensDTO("Kartoffel", 0.4));
+		ingr3.add(new IngrediensDTO("Olie", 5.7));
+		receptViewList.add(new ReceptViewDTO(3, "Chips", ingr3));
+		
+		prodList.add(new ProdBatchInfo(1, "Øl", 96, 1, 2, this.getOperatoer(2).getNavn(), 2));
+		prodList.add(new ProdBatchInfo(2, "Pizza", 5, 2, 2, this.getOperatoer(2).getNavn(), 2));
+		prodList.add(new ProdBatchInfo(3, "Chips", 10, 3, 2, this.getOperatoer(2).getNavn(), 2));
 	}
 
 	@Override
 	public void savePerson(OperatoerDTO p) throws Exception {
-		// simulate server error
-		// throw new RuntimeException(" \"savePerson\" fejlede");
-
-		try {
-			savePersonStmt.setString(1, p.getNavn());
-			savePersonStmt.setInt(2, Integer.valueOf(p.getCpr()));
-
-			savePersonStmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new DALException(" \"savePerson\" fejlede");
-		} 
+		p.setOprId(oprID++);
+		oprList.add(p);
 	}
 
 	@Override
 	public void updatePerson(OperatoerDTO p) throws Exception {
-		try {
-			updatePersonStmt.setString(1, p.getNavn());
-			updatePersonStmt.setInt(2, Integer.valueOf(p.getCpr()));
-			updatePersonStmt.setInt(3, p.getOprId());
-
-			updatePersonStmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new DALException(" \"updatePerson\" fejlede");
-		} 
+		for (OperatoerDTO per : oprList){
+			if (per.getOprId() == p.getOprId()){
+				per.setAdmin(p.isAdmin());
+				per.setCpr(p.getCpr());
+				per.setFarmaceut(p.isFarmaceut());
+				per.setIni(p.getIni());
+				per.setNavn(p.getNavn());
+				per.setOperatoer(p.isOperatoer());
+				per.setPassword(p.getPassword());
+				break;
+			}
+		}
 	}
 
 	@Override
 	public List<OperatoerDTO> getPersons() throws Exception {
-		List< OperatoerDTO > results = null;
-		ResultSet resultSet = null;
-
-		try 
-		{
-			resultSet = getPersonsStmt.executeQuery(); 
-			results = new ArrayList< OperatoerDTO >();
-
-//			while ( resultSet.next() )
-//			{
-//				results.add( new PersonDTO(
-//						resultSet.getInt( "id" ),
-//						resultSet.getString( "navn" ),
-//						resultSet.getInt( "alder" )));
-//			} 
-		} 
-		catch ( SQLException sqlException )
-		{
-			throw new DALException(" \"getPersons\" fejlede");
-		} 
-		finally
-		{
-			try 
-			{
-				resultSet.close();
-			} 
-			catch ( SQLException sqlException )
-			{
-				sqlException.printStackTrace();         
-				close();
-			} 
-		} 
-		return results;
+		return oprList;
 	} 
 
 	@Override
 	public List<OperatoerDTO> getOprView() throws Exception {
-		List< OperatoerDTO > results = null;
-		ResultSet resultSet = null;
-
-		try 
-		{
-			resultSet = getOprViewStmt.executeQuery(); 
-			results = new ArrayList< OperatoerDTO >();
-		} 
-		catch ( SQLException sqlException )
-		{
-			throw new DALException(" \"getPersons\" fejlede");
-		} 
-		finally
-		{
-			try 
-			{
-				resultSet.close();
-			} 
-			catch ( SQLException sqlException )
-			{
-				sqlException.printStackTrace();         
-				close();
-			} 
-		} 
-		return results;
+		List<OperatoerDTO> output = new ArrayList<OperatoerDTO>();
+		for (OperatoerDTO p : oprList){
+			if (p.isAdmin() || p.isFarmaceut() || p.isOperatoer()){
+				output.add(p);
+			}
+		}
+		return output;
 	} 
-
 
 	@Override
 	public int getSize() throws Exception {
-		//return size of person table
-		try {
-			ResultSet rs = null;
-			rs = getSizeStmt.executeQuery();
-			rs.next();
-			return rs.getInt(1);
-		} catch (SQLException e) {
-			throw new DALException(" \"getSize\" fejlede");
-		} 
+		return oprList.size();
 	}
 
 	@Override
 	public void deletePerson(int id) throws Exception {
-		try {
-			deletePersonStmt.setInt(1, id);
-
-			deletePersonStmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new DALException(" \"deletePerson\" fejlede");
-		} 
-	}
-
-	// close the database connection
-	public void close() {
-		try {
-			connection.close();
-		} // end try
-		catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		} 
+		for (int i=0; i< oprList.size(); i++){
+			if (oprList.get(i).getOprId() == id){
+				oprList.get(i).setAdmin(false);
+				oprList.get(i).setFarmaceut(false);
+				oprList.get(i).setOperatoer(false);
+				break;
+			}
+		}
 	}
 
 	@Override
 	public List<ReceptViewDTO> getReceptView() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return receptViewList;
 	}
 
 	@Override
 	public OperatoerDTO getOperatoer(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		for (OperatoerDTO opr : oprList){
+			if (opr.getOprId() == id){
+				return opr;
+			}
+		}
+		throw new Exception("Operatør kunne ikke findes.");
 	}
 
 	@Override
 	public List<ProdBatchInfo> getProdBatchInfoView() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return prodList;
 	}
-
 }
