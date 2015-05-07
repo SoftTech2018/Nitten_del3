@@ -71,7 +71,7 @@ public class OperatoerJunit {
 			}
 			nextOprID++;
 			oprDAO.createOperatoer(new OperatoerDTO(0, "test"+nextOprID, "test"+nextOprID, "test"+nextOprID, "test"+nextOprID, true, false, false));
-			assertEquals("test"+nextOprID, oprDAO.getOperatoer(nextOprID).getOprNavn());
+			assertEquals("test"+nextOprID, oprDAO.getOperatoer(nextOprID).getNavn());
 		} catch (dtu.server.dal.dbconnection.daointerfaces.DALException e) {e.printStackTrace();}		
 	}
 	
@@ -80,7 +80,7 @@ public class OperatoerJunit {
 		int oprID = 2;
 		try {
 			oprDAO.updateOperatoer(new OperatoerDTO(oprID, "update test"+oprID, "update test"+oprID, "update test"+oprID, "update test"+oprID, true, false, false));
-			assertEquals("update test"+oprID, oprDAO.getOperatoer(oprID).getOprNavn());
+			assertEquals("update test"+oprID, oprDAO.getOperatoer(oprID).getNavn());
 		} catch (dtu.server.dal.dbconnection.daointerfaces.DALException e) {e.printStackTrace();}		
 	}
 

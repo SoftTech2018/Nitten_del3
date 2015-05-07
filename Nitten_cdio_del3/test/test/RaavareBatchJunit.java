@@ -10,18 +10,26 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import connector.Connector;
-import daoimpl.RaavareBatchDAO;
-import daointerfaces.DALException;
-import daointerfaces.IRaavareBatchDAO;
-import dto.RaavareBatchDTO;
+import dtu.server.dal.dbconnection.connector.Connector;
+import dtu.server.dal.dbconnection.daoimpl.RaavareBatchDAO;
+import dtu.server.dal.dbconnection.daoimpl.TextReader;
+import dtu.server.dal.dbconnection.daointerfaces.DALException;
+import dtu.server.dal.dbconnection.daointerfaces.IRaavareBatchDAO;
+import dtu.server.dal.dbconnection.dto.RaavareBatchDTO;
 
 public class RaavareBatchJunit {
 	
-	IRaavareBatchDAO raavareBDAO;
+	static IRaavareBatchDAO raavareBDAO;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		try { new Connector(); } 
+		catch (InstantiationException e) { e.printStackTrace(); }
+		catch (IllegalAccessException e) { e.printStackTrace(); }
+		catch (ClassNotFoundException e) { e.printStackTrace(); }
+		catch (SQLException e) { e.printStackTrace(); }
+		TextReader txt = new TextReader("WAR");
+		raavareBDAO = new RaavareBatchDAO(txt);		
 	}
 
 	@AfterClass
@@ -30,13 +38,6 @@ public class RaavareBatchJunit {
 
 	@Before
 	public void setUp() throws Exception {
-		try { new Connector(); } 
-		catch (InstantiationException e) { e.printStackTrace(); }
-		catch (IllegalAccessException e) { e.printStackTrace(); }
-		catch (ClassNotFoundException e) { e.printStackTrace(); }
-		catch (SQLException e) { e.printStackTrace(); }
-		
-		raavareBDAO = new RaavareBatchDAO();		
 	}
 
 	@After
@@ -70,14 +71,8 @@ public class RaavareBatchJunit {
 	
 	@Test
 	public void updateRaavareBatchTest() {
-		int rbID = 0;
+		int rbID = 1;
 		try {
-			for(RaavareBatchDTO rbDto : raavareBDAO.getRaavareBatchList()){
-				if (rbDto.getMaengde() > 10000 && String.valueOf(rbDto.getMaengde()).startsWith("100")){
-					rbID = rbDto.getRbId();
-					break;
-				}				
-			}
 			double m = 10000+raavareBDAO.getRaavareBatch(rbID).getMaengde();
 			raavareBDAO.updateRaavareBatch(new RaavareBatchDTO(rbID, raavareBDAO.getRaavareBatch(rbID).getRaavareId(), m));
 			assertEquals(m, raavareBDAO.getRaavareBatch(rbID).getMaengde(), 0.01);
