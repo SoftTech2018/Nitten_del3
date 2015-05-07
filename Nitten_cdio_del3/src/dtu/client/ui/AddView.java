@@ -40,6 +40,10 @@ public class AddView extends Composite {
 		
 		addPanel = new VerticalPanel();
 		ft = new FlexTable();
+		ft.setWidth("275px");
+		ft.getFlexCellFormatter().setWidth(0, 0, "75px");
+		ft.getFlexCellFormatter().setWidth(0, 1, "200px");
+		ft.addStyleName("FlexTableLogin");
 		initWidget(addPanel);
 		
 		addPanel.add(ft);
