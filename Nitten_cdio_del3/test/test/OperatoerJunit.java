@@ -17,38 +17,29 @@ import dtu.shared.OperatoerDTO;
 
 public class OperatoerJunit {
 	
-	IOperatoerDAO oprDAO;
-//	IReceptKompDAO receptKDAO;
-	TextReader txt;
-	
-	
+	static IOperatoerDAO oprDAO;
+		
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		
-	}
-
-	@Before
-	public void setUp() throws Exception {
 		try { new Connector(); } 
 		catch (InstantiationException e) { e.printStackTrace(); }
 		catch (IllegalAccessException e) { e.printStackTrace(); }
 		catch (ClassNotFoundException e) { e.printStackTrace(); }
-		catch (SQLException e) { e.printStackTrace(); }
-		
-		txt = new TextReader("WAR");
-		oprDAO = new OperatoerDAO(txt);		
-//		receptKDAO = new ReceptKompDAO();
-		
-		
+		catch (SQLException e) { e.printStackTrace(); }		
+		TextReader txt = new TextReader("WAR");
+		oprDAO = new OperatoerDAO(txt);
+	}
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {		
+	}
+
+	@Before
+	public void setUp() throws Exception {
 	}
 
 	@After
-	public void tearDown() throws Exception {
-		
+	public void tearDown() throws Exception {		
 	}
 	
 	@Test
@@ -83,5 +74,4 @@ public class OperatoerJunit {
 			assertEquals("update test"+oprID, oprDAO.getOperatoer(oprID).getNavn());
 		} catch (dtu.server.dal.dbconnection.daointerfaces.DALException e) {e.printStackTrace();}		
 	}
-
 }
