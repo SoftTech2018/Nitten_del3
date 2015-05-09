@@ -107,7 +107,7 @@ public class BrowseView extends Composite {
 		final ToggleButton toggleButtonDetail = new ToggleButton("Vis detaljer");
 		toggleButtonDetail.setPixelSize(100, 20);
 		toggleButtonDetail.getUpFace().setText("Vis detaljer");
-		toggleButtonDetail.getDownFace().setText("Skjul detaljer");
+		toggleButtonDetail.getDownFace().setText("Skjul alt");
 		togglePanel.add(toggleButtonDetail);
 
 		final ToggleButton toggleButtonActive = new ToggleButton("Vis inaktive");
