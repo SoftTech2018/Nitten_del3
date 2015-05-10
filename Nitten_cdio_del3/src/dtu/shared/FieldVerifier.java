@@ -45,7 +45,6 @@ public class FieldVerifier {
 		if (name.length() == 0) {
 			return false;			
 		}
-		// max 30 karakterer
 		return name.length() <= 30;
 	}
 	
@@ -53,10 +52,6 @@ public class FieldVerifier {
 		String sString1 = cpr.substring(0, 6);
 		String sString2 = cpr.substring(7, 11);
 		String sString3 = cpr.substring(6,7);
-//		
-//		if(!sString1.matches("[0-9]") || !sString2.matches("[0-9]") || !(cpr.charAt(6)=='-')){
-//			return false;
-//		}
 		
 		if(cpr.length()>11){
 			return false;
@@ -70,32 +65,6 @@ public class FieldVerifier {
 		if (!sString3.matches("\\W")){
 			return false;
 		}
-		
-//		for (int i = 0; i < cpr.length(); i++){
-//			String sString = cpr.substring(i, i+1);
-//			if(!sString.matches("[0-9]") && !(cpr.charAt(6)=='-')){
-//				return false;
-//			}
-//		}
-//		
-//		if (!(cpr.charAt(6)=='-')){
-//			return false;
-//		}
-		
-		
-	
-//		for (int i=0; i < cpr.length(); i++){
-//			String sString = cpr.substring(i, i+1);
-//			if (!sString.matches("[0-9]")){
-//				return false;
-//			} 
-//		}
-//		if (cpr.length() < 11 || cpr.length() > 11){
-//			return false;
-//		}
-//		if (!(cpr.charAt(6)=='-')){
-//			return false;
-//		}
 		return true;
 	}
 }
