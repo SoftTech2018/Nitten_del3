@@ -50,22 +50,49 @@ public class FieldVerifier {
 	}
 	
 	public static boolean isValidCPR(String cpr) {
+		String sString1 = cpr.substring(0, 6);
+		String sString2 = cpr.substring(7, 11);
+		String sString3 = cpr.substring(6,7);
+//		
+//		if(!sString1.matches("[0-9]") || !sString2.matches("[0-9]") || !(cpr.charAt(6)=='-')){
+//			return false;
+//		}
 		
-		for (int i=0; i < cpr.length(); i++){
-			String sString = cpr.substring(i, i+1);
-			if (sString.matches("[a-z]")){
-				return false;
-			} else if (sString.matches("[!]")){
-				
-				return false;
-			}
-		}
-		if (cpr.length() < 11 || cpr.length() > 11){
+		if(!sString1.matches("[0-9]")){
 			return false;
 		}
-		if (!(cpr.charAt(6)=='-')){
+		if (!sString2.matches("[0-9]")){
 			return false;
 		}
+		if (!sString3.matches("-")){
+			return false;
+		}
+		
+//		for (int i = 0; i < cpr.length(); i++){
+//			String sString = cpr.substring(i, i+1);
+//			if(!sString.matches("[0-9]") && !(cpr.charAt(6)=='-')){
+//				return false;
+//			}
+//		}
+//		
+//		if (!(cpr.charAt(6)=='-')){
+//			return false;
+//		}
+		
+		
+	
+//		for (int i=0; i < cpr.length(); i++){
+//			String sString = cpr.substring(i, i+1);
+//			if (!sString.matches("[0-9]")){
+//				return false;
+//			} 
+//		}
+//		if (cpr.length() < 11 || cpr.length() > 11){
+//			return false;
+//		}
+//		if (!(cpr.charAt(6)=='-')){
+//			return false;
+//		}
 		return true;
 	}
 }
