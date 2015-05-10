@@ -58,13 +58,16 @@ public class FieldVerifier {
 //			return false;
 //		}
 		
-		if(!sString1.matches("[0-9]")){
+		if(cpr.length()>11){
 			return false;
 		}
-		if (!sString2.matches("[0-9]")){
+		if(!sString1.matches("\\d\\d\\d\\d\\d\\d")){
 			return false;
 		}
-		if (!sString3.matches("-")){
+		if (!sString2.matches("\\d\\d\\d\\d")){
+			return false;
+		}
+		if (!sString3.matches("\\W")){
 			return false;
 		}
 		
