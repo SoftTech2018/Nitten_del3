@@ -8,17 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
-import com.google.gwt.core.client.GWT;
-
-import dtu.shared.OperatoerDTO;
-import dtu.shared.ReceptDTO;
+import dtu.server.dal.dbconnection.connector.Connector;
+import dtu.server.dal.dbconnection.daointerfaces.DALException;
 import dtu.server.dal.dbconnection.dto.ProduktBatchDTO;
 import dtu.server.dal.dbconnection.dto.ProduktBatchKompDTO;
 import dtu.server.dal.dbconnection.dto.RaavareBatchDTO;
 import dtu.server.dal.dbconnection.dto.RaavareDTO;
 import dtu.server.dal.dbconnection.dto.ReceptKompDTO;
+import dtu.shared.OperatoerDTO;
+import dtu.shared.ReceptDTO;
 
 public class TextReader {
 	
@@ -32,11 +30,17 @@ public class TextReader {
 		illegalString = "#";
 	}	
 
-	public TextReader(String path) throws FileNotFoundException{
+	public TextReader(String path) throws FileNotFoundException, DALException{
 		sqlFileCommands = new File(path+"/WEB-INF/sqlCommands.txt");
 		sqlCommands = readFile(sqlFileCommands);
 		illegalString = "#";
-	}
+		Connector.doUpdate(getCommand(44)); // Opretter view: view_oprlist
+		Connector.doUpdate(getCommand(51)); // Opretter view: view_produktbatchkompinfo
+		Connector.doUpdate(getCommand(53)); // Opretter view: view_lager
+		Connector.doUpdate(getCommand(54)); // Opretter view: view_produceret
+		Connector.doUpdate(getCommand(55)); // Opretter view: view_igang
+		Connector.doUpdate(getCommand(56)); // Opretter view: view_planlagt
+		}
 	
 	private String[] readFile(File fil) throws FileNotFoundException{
 		List<String> data = new ArrayList<String>();
